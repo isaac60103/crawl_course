@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<style>
+
+	#my_table {
+		background-color: pink;
+	}
+	table, th, td {
+		border: 1px solid black;
+	    border-collapse: collapse;
+	}
+	th, td {
+		padding: 8px;
+	}
+	</style>
+</head>
+<body>
+	<h1>Beautifulsoup example</h1>
+	
+	<div class = "group1" id = "id1">
+	this is div tag (class="group1")
+	</div>
+
+	<div>	
+		<table id = "my_table">
+		  <tr>
+			<th>table header 1</th>
+			<th>table header 2</th>
+			<th>table header 3</th>
+			<th>table header 4</th>
+		  </tr>
+		  <tr>
+			<td> row2 column1 </td>
+			<td class = "group1"> row2 column2 (class="group1") </td>
+			<td> 
+				<a href = "https://www.google.com.tw/">row2 column3 (this is google link)</a> 
+			</td>
+			<td> 
+				<a href = "https://www.youtube.com/">row2 column4 (this is youtube link) </a>  
+			</td>
+		  </tr>
+		  <tr>
+			<td value = "5566">row3 column1 </td>
+			<td>row3 column2
+				<ol>
+					<li class = "group2"> li tag (class="group2") </li>
+					<li> li tag </li>
+				</ol>
+			</td>
+			<td>
+				<a href = "http://www.ntu.edu.tw/" id = "ntu_link"> row3 column3 (this is ntu link)</a>
+			</td>
+			<td class = "group3">row3 column4 (class="group3")</td>
+		  </tr>
+
+		</table>
+	</div>
+
+	<p>hello_python</p>
+
+</body>
+</html>
