@@ -1,0 +1,2218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0042)http://www.taifex.com.tw/chinese/3/3_5.asp -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="image_src" type="image/jpeg" href="http://www.taifex.com.tw/chinese/images/fb_logo.jpg"><meta property="og:image" content="http://www.taifex.com.tw/chinese/images/fb_logo.jpg">
+
+<title>交易資訊/每日外幣參考匯率查詢</title>
+ 
+
+<link href="./taifex_files/jquery-ui.css" rel="stylesheet">
+<script type="text/javascript" src="./taifex_files/jquery-latest.min.js.下載"></script>
+<script type="text/javascript" src="./taifex_files/jquery-ui.min.js.下載"></script>
+<script type="text/javascript" src="./taifex_files/jquery.ifixpng.js.下載"></script>
+<script type="text/javascript" src="./taifex_files/jquery.ui.datepicker-zh-TW.js.下載"></script>
+
+
+<link rel="stylesheet" type="text/css" href="./taifex_files/global.css">
+<link rel="stylesheet" type="text/css" href="./taifex_files/content.css">
+
+<script type="text/javascript" src="./taifex_files/jquery.ifixpng.js.下載"></script>
+<script type="text/javascript">
+<!--
+$(function(){
+	$('.fixpng').ifixpng(); 
+});
+-->
+</script>
+  <style>
+    article,aside,figure,figcaption,footer,header,hgroup,menu,nav,section {display:block;}
+    
+  </style>
+</head>
+<body>
+<div class="wrapper"> 
+    <!--Header Start-->
+    <div id="btnTop" class="bt_top"></div>
+
+<link rel="stylesheet" type="text/css" href="./taifex_files/jquery-ui.css">
+<script src="./taifex_files/jquery-ui-1.11.4.min.js.下載" type="text/javascript"></script>
+<script src="./taifex_files/jquery.placeholder.min.js.下載" type="text/javascript"></script>
+
+<script language="javascript">
+
+
+function winopen(url){
+	var str = "網址： " + url + "\n\n將連結到其他網站，\n\n請問是否確定？";
+	var str2 = "&nbsp;<br />網址： " + url + "&nbsp;<br />&nbsp;<br />將連結到其他網站，請問是否確定？&nbsp;<br />&nbsp;<br />";
+	if (document.getElementById('div_popupbox') == null) {
+		if (confirm(str))
+		{
+			window.open(url);
+		}
+	} else {
+		location.href = "#";
+		document.getElementById('popupbox_title').innerHTML = "連結外網警示";
+		document.getElementById('popupbox_comment').innerHTML = str2;
+		document.getElementById('popupbox_url').value = url;
+		document.getElementById("div_popupbox").style.display = "block";
+	}
+}
+</script>
+	<div class="header clearfix">
+        <h1 class="logo" title="網站名稱"><a href="http://www.taifex.com.tw/chinese/index.asp" title="回首頁"></a></h1>
+
+    <div class="ann1">
+      <div class="txt"></div>
+    </div>	
+		
+        <div class="header_nav01">
+            <ul>
+				<li><a href="http://www.taifex.com.tw/eng/index.asp">English</a> / </li>
+                <li><a href="http://www.taifex.com.tw/chinese/sitemap/sitemap.asp">網站導覽</a> / </li>
+                <li><a href="http://www.taifex.com.tw/chinese/index.asp">回首頁</a> / </li>
+                <li><a href="http://epaper.taifex.com.tw/" target="_blank">電子報訂閱</a></li>
+            </ul>
+        </div>
+        <div class="search">
+<form name="myHeaderform" id="myHeaderform">
+<script language="javascript">
+
+
+
+				
+    $(function () {
+
+        //mdbs add:go to top
+        $("#btnTop").click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        });
+
+				   $('input').placeholder();	 
+				   $("#pstring").autocomplete({
+					source: "", 
+					autoFocus: true
+					 });  
+					$("#pstring").keyup(function() {
+					   var keyword=$("#pstring").val();
+					   var code =keyword.charCodeAt();
+					   if($.trim(keyword)!= "" && code !=12288){
+						crossDomainAjax("http://www.taifex.com.tw/TS50Search/wildcard.ashx?term="+encodeURIComponent(keyword),function (data) {
+							$("#pstring").autocomplete({
+								source: data, //搜尋網站的網址
+								autoFocus: true
+							});  
+						});
+						}
+				  });  
+
+                var $data = "";
+                $.ajax({
+                    url: "http://www.taifex.com.tw/TS50Search/listhotkeyword.ashx",
+                    type: 'get',
+                    datatype: 'jsonp',
+                    jsonp: 'callback',
+                    jsonpCallback: 'jsonpCallback',
+                    success: function (data) {
+                        $data = JSON.parse(jsonpCallback(data));
+                        var count = 1;
+                        for (var i in $data) {
+                            setHotKeyword($data[i]);
+                            if (count < 5) {
+                                $('.hk-list').append("、");
+                            }
+                            count++;
+                        }
+
+                    }
+                });
+            });
+				  function crossDomainAjax (url, successCallback) {
+
+					// IE8 & 9 only Cross domain JSON GET request
+					if ('XDomainRequest' in window && window.XDomainRequest !== null) {
+
+						var xdr = new XDomainRequest(); // Use Microsoft XDR
+						xdr.open('get', url);
+						xdr.onload = function () {
+							var dom  = new ActiveXObject('Microsoft.XMLDOM'),
+								JSON = $.parseJSON(xdr.responseText);
+
+							dom.async = false;
+
+							if (JSON == null || typeof (JSON) == 'undefined') {
+								JSON = $.parseJSON(data.firstChild.textContent);
+							}
+
+							successCallback(JSON); // internal function
+						};
+
+						xdr.onerror = function() {
+							_result = false;  
+						};
+
+						xdr.send();
+					} 
+
+					// IE7 and lower can't do cross domain
+					else if (navigator.userAgent.indexOf('MSIE') != -1 &&
+							parseInt(navigator.userAgent.match(/MSIE ([\d.]+)/)[1], 10) < 8) {
+					  return false;
+					}    
+
+					// Do normal jQuery AJAX for everything else          
+					else {
+						$.ajax({
+							url: url,
+							cache: false,
+							dataType: 'json',
+							type: 'GET',
+							async: false, // must be set to false
+							success: function (data, success) {
+								successCallback(data);
+							}
+						});
+					}
+				}			
+            function jsonpCallback(data) {
+                return data;
+            }
+            function setHotKeyword(keyword) {
+                var a = document.createElement('a');
+                //var li = document.createElement('li');
+                a.setAttribute('href', 'www.taifex.com.tw/TS50Search/SearchIndex.aspx?Keyword=' + keyword+'&languageType=chinese&FileType=htm,doc,xls,ppt,pdf'); //若英文網站多加languageType=eng
+                a.setAttribute('title', keyword);
+                a.setAttribute('class', 'blue-link');
+                a.setAttribute('target', '_blank');
+                a.innerHTML = keyword;
+                $('.hk-list').append(a); //.append(li)
+            }
+			
+			
+			
+			
+			
+			
+			
+	function handleKeydown(){
+	if (window.event.keyCode == 13) // 表示按下 enter
+	{
+	window.event.returnValue = false; // 取消 submit()
+	searchgosubmit();
+	}
+
+	}
+
+		function searchgosubmit(){
+		
+			if (document.getElementById("pstring").value==""){
+				alert("請輸入搜尋字串!");
+			}else{
+
+
+		//var url='http://www.taifex.com.tw/TS50Search/SearchResult.asp?KW='+escape(document.myHeaderform.pstring.value)+'&DB=Taifex_new_C&ST=basic&RC=default&SBV=&S_LOCALE=Wording_TW'; 
+		var url='http://www.taifex.com.tw/TS50Search/SearchIndex.aspx?Keyword='+escape(document.myHeaderform.pstring.value)+'&languageType=chinese&FileType=htm,doc,xls,ppt,pdf&SearchType=Fuzzy'; 
+		window.open(url,'_blank');
+		return;
+			}
+		}
+	
+
+
+</script>        
+            <input name="pstring" id="pstring" type="text" onkeydown="handleKeydown();" placeholder="請輸入查詢字詞" class="ui-autocomplete-input" autocomplete="off">
+            			<input type="HIDDEN" name="h" value="0">
+                    	<input type="HIDDEN" name="l" value="0">
+                    	<input type="HIDDEN" name="o" value="4">
+                    	<input type="HIDDEN" name="a" value="">
+                    	<input type="HIDDEN" name="f" value="0">
+                    	<input type="HIDDEN" name="t" value="0">
+                    	<input type="HIDDEN" name="s" value="2">
+	
+                    	<input type="HIDDEN" name="q" value="">
+                    	<input type="HIDDEN" name="e" value="">
+                    	<input type="HIDDEN" name="n" value="">
+	
+	
+	
+                    	<input type="HIDDEN" name="fileaut" value="">
+                    	<input type="HIDDEN" name="filename" value="">
+                    	<input type="HIDDEN" name="filetype" value="">
+	
+                    	<input type="HIDDEN" name="rel_start" value="1">
+                    	<input type="HIDDEN" name="rel_num" value="10">
+                    	<input type="HIDDEN" name="sim_start" value="1">
+                    	<input type="HIDDEN" name="sim_num" value="10">
+	
+                    	<input type="HIDDEN" name="property" value="">
+                    	<input type="HIDDEN" name="property" value="">
+        <a href="javascript:searchgosubmit();" class="btn_search"></a> 
+</form>        
+        </div>
+		
+     <div class="facebook">
+     <a href="https://www.facebook.com/taifexsocial" class="fb1" target="_blank" title="臺灣期貨交易所 Facebook"></a> 
+	 <a href="https://plus.google.com/111846617247693181728" class="gg1" target="_blank" title="臺灣期貨交易所 Google+"></a>
+	 <a href="https://itunes.apple.com/tw/app/qi-jiao-suo/id686377410?l=zh&amp;mt=8" class="ios" target="_blank" title="下載iOS APP"></a> 
+	 <a href="https://play.google.com/store/apps/details?id=com.mitake.taifex.impl&amp;hl=zh_TW" class="android" target="_blank" title="下載Android APP"></a> 
+	 <a href="http://www.taifex.com.tw/chinese/11/RSS0.asp" class="rss" target="_blank" title="RSS訂閱"></a>
+    </div>	
+
+        
+        <div class="header_nav02">
+            <ul>
+<li class="nav01" onmouseover="javascript:mastermenu(1)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/1/Welcome.asp"></a>
+<ul id="mastermenu_1" style="left:0px;width:140px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/1/Welcome.asp">首長歡迎詞</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/OriginOfEstablish.asp">沿革、宗旨、展望</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/OrgPattern.asp">組織型態</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/OrgStructure.asp">組織結構</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/CorpLogo.asp">企業識別標誌</a></li>
+<li><a href="http://taifex.learn.hinet.net/about.php?lang=1" target="_blank">影音介紹</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/AnnualRep.asp">年報</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/International.asp">國際合作專區</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/HistoryOfTaifex.asp">iTaifex博物館</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/Map.asp">地圖</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/ContactTAIFEX.asp">聯絡我們</a></li>
+</ul>
+</li>
+<li class="nav02" onmouseover="javascript:mastermenu(2)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/2/Products.asp"></a>
+<ul id="mastermenu_2" style="left:0px;width:126px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/2/TX.asp">股價指數期貨類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/STF.asp">個股期貨類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/GBF.asp">利率期貨類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/TXO.asp">股價指數選擇權類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/SSO.asp">個股選擇權類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/GDF.asp">商品期貨與選擇權類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/RTF.asp">匯率期貨類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/RTO.asp">匯率選擇權類</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/DevelopPlan.asp">規劃中商品資訊</a></li>
+</ul>
+</li>
+<li class="nav03" onmouseover="javascript:mastermenu(3)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/3/7_12_1.asp"></a>
+<ul id="mastermenu_3" style="left:0px;width:224px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/3/3_1_1.asp">交易資訊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/7_12_1.asp">三大法人</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/7_8.asp">大額交易人未沖銷部位結構</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/3_5.asp">每日外幣參考匯率查詢</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/AppForm.asp">交易歷史資料申請</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/dl_3_1_2.asp">資料下載專區</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/InfoVendor.asp">資訊廠商</a></li>
+<li><a href="http://info512.taifex.com.tw/" target="_blank">台灣期貨交易所行情資訊網站</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/TradeHalt.asp">訊息面暫停交易之股票期貨及選擇權</a></li>
+</ul>
+</li>
+<li class="nav04" onmouseover="javascript:mastermenu(4)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/4/MarketFramework.asp"></a>
+<ul id="mastermenu_4" style="left:0px;width:196px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/4/MarketFramework.asp">交易制度</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/FeeSchedules.asp">費率表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/TradingSystem.asp">電子交易系統</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/TraderPL.asp">部位限制</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/FCMList.asp">期貨商名冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/Calendar.asp">行事曆</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/ContractAdj.asp">股票期貨/選擇權契約相關資訊</a></li>
+</ul>
+</li>
+<li class="nav05" onmouseover="javascript:mastermenu(5)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/5/Clearing.asp"></a>
+<ul id="mastermenu_5" style="left:0px;width:140px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/5/ClrProcess.asp">結算制度</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/IndexMargining.asp">保證金</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/SafeguardSystem.asp">財務安全保衛系統</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/CMCriteria.asp">結算會員資格標準</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/CMList2.asp">結算會員名冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/PositionManagement.asp">部位管理</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/FutIndxFSP.asp">最後結算價一覽表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/FutIndxPosSettled.asp">到期契約履約交割說明</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/SettledBond.asp">可交割債券轉換因子表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/FeeSchedules.asp?menuid1=05">費率表</a></li>
+</ul>
+</li>
+<li class="nav06" onmouseover="javascript:mastermenu(6)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/6/Infor.asp"></a>
+<ul id="mastermenu_6" style="left:0px;width:98px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/6/Infor.asp">最新修訂資訊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/6/TaifexRule.asp">本公司市場規章</a></li>
+<li><a href="http://www.selaw.com.tw/" target="_blank">法令查詢</a></li>
+</ul>
+</li>
+<li class="nav07" onmouseover="javascript:mastermenu(7)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/7/AnnualTrading.asp"></a>
+<ul id="mastermenu_7" style="left:0px;width:210px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/7/DailyFCM.asp">期貨商交易量日報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/WeeklyFCM.asp">期貨商交易量週報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/MonthlyFCM.asp">期貨商交易量月報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/YearlyFCM.asp">期貨商交易量年報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/AnnualTrading.asp">各商品年成交量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/MarketParticipant.asp">市場參與者統計</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/7_10.asp">各類交易人各商品交易量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/TradingStatistics1.asp">經紀、自營商交易量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/TradingStatistics2.asp">各類交易人交易量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/trade_volume.xls" target="_blank">前一月份各商品每日交易量統計表 </a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/VIXMinQuotesNew.asp">臺指選擇權波動率指數下載</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/va01.asp">加值資料集</a></li>
+</ul>
+</li>
+<li class="nav08" onmouseover="javascript:mastermenu(8)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/8/NetValuePerShare.asp"></a>
+<ul id="mastermenu_8" style="left:0px;width:336px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/8/NetValuePerShare.asp">期貨商財務資料</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM4.asp">交易結算申請作業各項表單</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM5.asp">財務稽核申報作業各項表單</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM6.asp">期貨商會計制度範本</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM7.asp">期貨商內控標準規範</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM10.asp">IB內控標準規範</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM13.asp">期貨商公開資訊觀測站</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM11.asp">違規處置歷史案例</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/FCM12.asp">媒體申報系統上傳格式</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/SPANRiskParameterFile.asp">期貨商SPAN相關檔案下載</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/ParticipationReq.asp">期貨業設置條件一覽表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/USReg.asp">期貨商向美國投資人推廣本公司期貨商品應注意之事項</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/8/TechDocs.asp">電腦技術文件下載區</a></li>
+</ul>
+</li>
+<li class="nav09" onmouseover="javascript:mastermenu(9)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/9/9_7.asp"></a>
+<ul id="mastermenu_9" style="left:0px;width:294px;display:none;">
+<li><a href="https://investor.taifex.com.tw/" target="_blank">交易人個人資料查詢</a></li>
+<li><a href="https://www.taifex.com.tw/chinese/9/QueryPosition.asp">交易人部位查詢功能</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_7.asp">問題與解答</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_12.asp">常見市場規章案例解說專欄</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_2.asp">專有名詞</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_3_1.asp">教育宣導</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_4.asp">選擇權理論價格計算</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_6.asp">期貨交易糾紛類型</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_1950.asp">1950消費者服務專線</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/%E6%B3%95%E4%BA%BA%E6%B3%95%E8%A6%8F%E8%AA%AA%E6%98%8E%E8%88%87%E4%BB%8B%E7%B4%B9.doc" target="_blank">法人機構參與期貨市場法規之說明與介紹</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/9_10.asp">期貨投資人資通安全維護手冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/AppForms.asp">期貨交易教育中心相關申請表單</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/%E8%B3%87%E6%96%99%E6%9F%A5%E8%A9%A2%E7%94%B3%E8%AB%8B%E8%A1%A8.pdf" target="_blank">期貨商、交易人資料查詢申請表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/%E6%9C%9F%E8%B2%A8%E5%95%86%E5%BE%97%E5%8F%97%E8%A8%97%E5%BE%9E%E4%BA%8B%E6%9C%9F%E8%B2%A8%E4%BA%A4%E6%98%93%E4%B9%8B%E5%9C%8B%E5%A4%96%E6%9C%9F%E8%B2%A8%E4%BA%A4%E6%98%93%E5%A5%91%E7%B4%84.xls">期貨商得受託從事期貨交易之國外期貨交易契約</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/%E6%9C%9F%E4%BA%A4%E6%89%80%E5%90%84%E9%83%A8%E9%96%80%E5%B0%8D%E5%A4%96%E7%AA%97%E5%8F%A3%E5%90%8D%E5%96%AE.doc" target="_blank">期貨市場服務中心</a></li>
+<li><a href="http://taifex.learn.hinet.net/" target="_blank">期貨影音知識網</a></li>
+<li><a href="http://taifex.learn.hinet.net/elearn/" target="_blank">期貨與選擇權數位學習網</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/9/%E8%87%BA%E7%81%A3%E6%9C%9F%E8%B2%A8%E4%BA%A4%E6%98%93%E6%89%80%E9%87%91%E8%9E%8D%E5%B8%82%E5%A0%B4%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%A7%8B%E8%B3%87%E8%A8%8A%E6%8F%AD%E9%9C%B2%E5%A0%B1%E5%91%8A.pdf" target="_blank">臺灣期貨交易所金融市場基本架構資訊揭露報告</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/10/PromotePamphlet1.asp?menuid1=09">宣導手冊 </a></li>
+</ul>
+</li>
+<li class="nav10" onmouseover="javascript:mastermenu(10)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/10/AnnualRep.asp"></a>
+<ul id="mastermenu_10" style="left:0px;width:112px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/10/AnnualRep.asp">年報</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/10/Pub1.asp">臺灣期貨雙月刊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/10/Pub4.asp">歷史定期性刊物</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/10/PromotePamphlet1.asp">宣導手冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/10/Abstract.asp">研究報告摘要</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/10/AboutJournal.asp">期貨與選擇權學刊</a></li>
+</ul>
+</li>
+<li class="nav11" onmouseover="javascript:mastermenu(11)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/11/News1.asp"></a>
+<ul id="mastermenu_11" style="left:0px;width:168px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/11/News1.asp">公告</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/News2.asp">新聞稿</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/News3.asp">股票期貨/選擇權契約調整</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/HisNews.asp">歷史資料區</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/DailyMarketInfo.asp">每日市場資訊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/RSS0.asp">RSS資訊訂閱服務</a></li>
+</ul>
+</li>
+<li class="nav12" onmouseover="javascript:mastermenu(12)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/12/FP1.asp"></a>
+<ul id="mastermenu_12" style="left:-48px;width:196px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/12/FP1.asp">參與交易方式</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/2/TX.asp?menuid1=12">商品面</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/TraderPL.asp?menuid1=12">制度面</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/CMList.asp?menuid1=12">期貨商暨結算會員資格一覽表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/FCMList.asp?menuid1=12">各式名冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/10/PromotePamphlet1.asp?menuid1=12">宣導手冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/12/QA.asp">問題與解答</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/12/FP2.asp">外資進入臺灣期貨市場作業說明</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/12/LEI.pdf" target="_blank">法人機構識別碼LEI</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/1/ContactTAIFEX.asp?menuid1=12">聯絡我們</a></li>
+</ul>
+</li>
+<li class="nav13" onmouseover="javascript:mastermenu(13)" onmouseout="javascript:mastermenu(0);"><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks1.asp"></a>
+<ul id="mastermenu_13" style="left:-36px;width:112px;display:none;">
+<li><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks1.asp">主管機關</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks2.asp">證券期貨周邊單位</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks3.asp">國外交易所</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks4.asp">期貨商</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks5.asp">結算會員</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks6.asp">國際財金網站</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/13/RelatedLinks7.asp">即時交易資訊</a></li>
+</ul>
+</li>
+</ul>
+<script type="text/javascript">
+function mastermenu(id){
+var i;
+for (i=1;i<=13;i++) {
+if (i == id) {
+document.getElementById('mastermenu_' + i).style.display='block';
+} else {
+document.getElementById('mastermenu_' + i).style.display='none';
+}
+}
+}
+</script>
+
+        </div>
+        
+    </div>
+    
+
+
+        
+    <div class="vision flash"> 
+
+<style type="text/css">
+        a img {
+                border: none;
+        }
+        #headerbanner_pic {
+                position: relative;
+                width: 1000px;
+                height: 154px;
+                border: 0px solid #ccc;
+        }
+        #headerbanner_pic a.ad {
+                position: absolute;   /* 讓圖片疊在一起 */
+                z-index:8;
+        }
+        #headerbanner_pic .control {
+                position: absolute;
+                right: 4px;
+                bottom: 1px;
+                z-index:99;
+        }
+        #headerbanner_pic .control a {
+                display: inline-block;
+                margin: 0 3px;
+                
+                width:12px; height:20px;
+				color:#fff;
+				font-size:1 px;
+				text-align:center;
+
+        }
+        #headerbanner_pic .control a.on {
+
+				color:#F90;
+        }
+        #headerbanner_pic .select{ background:url(../images/vision_bottom.png) no-repeat; height:20px; width:1000px; position:absolute; top:135px; z-index:50;}
+</style>        
+        
+<script type="text/javascript">
+	$(function(){
+		var $block = $('#headerbanner_pic'), 
+			$ad = $block.find('.ad'),
+			showIndex = 0,			// 預設要先顯示那一張
+			fadeOutSpeed = 2000,	// 淡出的速度
+			fadeInSpeed = 3000,		// 淡入的速度
+			defaultZ = 10,			// 預設的 z-index
+			isHover = false,
+			timer, speed = 2000;	// 計時器及輪播切換的速度
+		
+		// 先把其它圖片的變成透明
+		$ad.css({
+			opacity: 0,
+			zIndex: defaultZ - 1
+		}).eq(showIndex).css({
+			opacity: 1,
+			zIndex: defaultZ
+		});
+		
+		// 組出右下的按鈕
+		var str = '';
+		for(var i=0;i<$ad.length;i++){
+			str += '<a href="#" id='+(i + 1)+'><font size=4>●</font></a>';
+		}
+		var $controlA = $('#headerbanner_pic').append($('<div class="select fixpng"><div class="control">' + str + '</div></div>').css('zIndex', defaultZ + 1)).find('.control a');
+
+		// 當按鈕被點選時
+		// 若要變成滑鼠滑入來切換時, 可以把 click 換成 mouseover
+		$controlA.click(function(){
+			// 取得目前點擊的號碼
+			showIndex = $(this).attr('id') * 1 - 1;
+			
+			// 顯示相對應的區域並把其它區域變成透明
+			$ad.eq(showIndex).stop().fadeTo(fadeInSpeed, 1, function(){
+				if(!isHover){
+					// 啟動計時器
+					timer = setTimeout(autoClick, speed);
+				}
+			}).css('zIndex', defaultZ).siblings('a').stop().fadeTo(fadeOutSpeed, 0).css('zIndex', defaultZ - 1);
+			// 讓 a 加上 .on
+			$(this).addClass('on').siblings().removeClass('on');
+
+			return false;
+		}).focus(function(){
+			$(this).blur();
+		}).eq(showIndex).addClass('on');
+
+		$block.hover(function(){
+			isHover = true;
+			// 停止計時器
+			clearTimeout(timer);
+		}, function(){
+			isHover = false;
+			// 啟動計時器
+			timer = setTimeout(autoClick, speed);
+		})
+		
+		// 自動點擊下一個
+		function autoClick(){
+			if(isHover) return;
+			showIndex = (showIndex + 1) % $controlA.length;
+			$controlA.eq(showIndex).click();
+		}
+		
+		// 啟動計時器
+		timer_header = setTimeout(autoClick, speed);
+	});
+</script>        
+		<div id="brower_others" style="display: block;">
+    
+
+    	<div id="headerbanner_pic" class="vision">
+    
+			<a class="ad" style="opacity: 0; z-index: 9;"><img border="0" width="1000" height="154" src="./taifex_files/af_b_banner.jpg"></a>
+    
+			<a class="ad" style="opacity: 0; z-index: 9;"><img border="0" width="1000" height="154" src="./taifex_files/SPF_UDF_1000x152.jpg"></a>
+    
+			<a class="ad" style="opacity: 0; z-index: 9;"><img border="0" width="1000" height="154" src="./taifex_files/i5f.jpg"></a>
+    
+			<a class="ad" style="opacity: 0.0225677; z-index: 9;"><img border="0" width="1000" height="154" src="./taifex_files/FX.jpg"></a>
+    
+			<a class="ad" style="opacity: 0.658487; z-index: 10;"><img border="0" width="1000" height="154" src="./taifex_files/FXOptions_C.jpg"></a>
+        
+		<div class="select fixpng" style="z-index: 11;"><div class="control"><a href="http://www.taifex.com.tw/chinese/3/3_5.asp#" id="1" class=""><font size="4">●</font></a><a href="http://www.taifex.com.tw/chinese/3/3_5.asp#" id="2" class=""><font size="4">●</font></a><a href="http://www.taifex.com.tw/chinese/3/3_5.asp#" id="3" class=""><font size="4">●</font></a><a href="http://www.taifex.com.tw/chinese/3/3_5.asp#" id="4" class=""><font size="4">●</font></a><a href="http://www.taifex.com.tw/chinese/3/3_5.asp#" id="5" class="on"><font size="4">●</font></a></div></div></div>
+
+        </div>
+    	
+        
+        
+<script>
+		document.getElementById("brower_others").style.display = "block";
+</script>
+
+
+    </div>    
+	<div class="crumb"><a href="http://www.taifex.com.tw/chinese/index.asp" class="home" style="background:url(../images/icon_crumb.jpg) no-repeat left center; padding:0 0 0 17px; color:#0066ab;">首頁</a> &gt; <a href="http://www.taifex.com.tw/chinese/3/7_12_1.asp" style="color:#0066ab;">交易資訊</a> &gt; <a href="http://www.taifex.com.tw/chinese/3/3_5.asp" style="color:#0066ab;">每日外幣參考匯率查詢</a> <a href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.taifex.com.tw%2Fchinese%2F3%2F3%5F5%2Easp" target="_blank"><img width="16" height="16" src="./taifex_files/fb_share.png"></a> <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.taifex.com.tw%2Fchinese%2F3%2F3%5F5%2Easp" target="_blank"><img width="16" height="16" src="./taifex_files/gp_share.png"></a></div>
+ 
+    <!--Header End--> 
+    <!--Container Start-->
+    <div class="container clearfix page"> 
+        <!--SidebarLeft Start-->
+
+		<div class="sidebar_left">
+        	<div class="hd"><h2>交易資訊</h2></div>
+            <div class="bd">
+                    
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_01000000_1" style="padding-left:5px;">
+<img id="id_03_01000000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_01000000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_01000000&quot;)" style="float:left; width:90%;">交易資訊</a>
+<div class="clear"></div>
+<ul id="id_03_01000000" style="display:none;">
+<li id="id_03_01010000_1" style="padding-left:15px;">
+<img id="id_03_01010000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_01010000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_01010000&quot;)" style="float:left; width:90%;">期貨</a>
+<div class="clear"></div>
+<ul id="id_03_01010000" style="display:none;">
+<li id="id_03_01010100_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_1_1.asp" style="float:left; width:90%;">期貨每日交易行情查詢</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01010200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_1_2.asp" style="float:left; width:90%;">期貨每日交易行情下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01010300_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_1_3.asp" style="float:left; width:90%;">前30個交易日期貨每筆成交資料</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01010400_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_1_4.asp" style="float:left; width:90%;">前30個交易日期貨價差委託成交概況表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01010500_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_1_5.asp" style="float:left; width:90%;">前30個交易日期貨價差每筆成交資料</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_01020000_1" style="padding-left:15px;">
+<img id="id_03_01020000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_01020000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_01020000&quot;)" style="float:left; width:90%;">選擇權</a>
+<div class="clear"></div>
+<ul id="id_03_01020000" style="display:none;">
+<li id="id_03_01020100_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_2_2.asp" style="float:left; width:90%;">選擇權每日交易行情查詢</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01020200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_2_1.asp" style="float:left; width:90%;">選擇權每日交易行情簡表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01020300_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_2_3.asp" style="float:left; width:90%;">選擇權每日交易行情下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01020400_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_2_4.asp" style="float:left; width:90%;">前30個交易日選擇權每筆成交資料</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01020500_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_7.asp" style="float:left; width:90%;">選擇權每日Delta值</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01020600_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/PCRatio.asp" style="float:left; width:90%;">臺指選擇權Put/Call比</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_01030000_1" style="padding-left:15px;">
+<img id="id_03_01030000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_01030000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_01030000&quot;)" style="float:left; width:90%;">鉅額交易</a>
+<div class="clear"></div>
+<ul id="id_03_01030000" style="display:none;">
+<li id="id_03_01030100_1" style="padding-left:15px;">
+<img id="id_03_01030100_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_01030100&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_01030100&quot;)" style="float:left; width:90%;">每日成交資訊</a>
+<div class="clear"></div>
+<ul id="id_03_01030100" style="display:none;">
+<li id="id_03_01030101_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_1.asp" style="float:left; width:90%;">逐筆撮合之單式委託成交</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01030102_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_2_1.asp" style="float:left; width:90%;">逐筆撮合之組合式委託成交</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01030103_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_3_1.asp" style="float:left; width:90%;">議價申報成交</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01030104_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_1dl.asp" style="float:left; width:90%;">逐筆撮合之單式委託成交-下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01030105_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_2dl.asp" style="float:left; width:90%;">逐筆撮合之組合式委託成交-下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01030106_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_3dl.asp" style="float:left; width:90%;">議價申報成交-下載</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_01030200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_3.asp" style="float:left; width:90%;">各商品成交資訊</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01030300_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_4.asp" style="float:left; width:90%;">成交量統計</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01030400_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_3_5dl.asp" style="float:left; width:90%;">各商品成交資訊-下載</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_01040000_1" style="padding-left:15px;">
+<img id="id_03_01040000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_01040000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_01040000&quot;)" style="float:left; width:90%;">期貨商買賣日報表</a>
+<div class="clear"></div>
+<ul id="id_03_01040000" style="display:none;">
+<li id="id_03_01040100_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/fcm_fut_rep.asp" style="float:left; width:90%;">期貨</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01040200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/fcm_opt_rep.asp" style="float:left; width:90%;">選擇權</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01040300_1" style="padding-left:15px;">
+<img id="id_03_01040300_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_01040300&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_01040300&quot;)" style="float:left; width:90%;">鉅額交易</a>
+<div class="clear"></div>
+<ul id="id_03_01040300" style="display:none;">
+<li id="id_03_01040301_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/fcm_fut_bt_rep.asp" style="float:left; width:90%;">期貨</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_01040302_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/fcm_opt_bt_rep.asp" style="float:left; width:90%;">選擇權</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_02000000_1" style="padding-left:5px;">
+<img id="id_03_02000000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02000000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02000000&quot;)" style="float:left; width:90%;">三大法人</a>
+<div class="clear"></div>
+<ul id="id_03_02000000" style="display:none;">
+<li id="id_03_02010000_1" style="padding-left:15px;">
+<img id="id_03_02010000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02010000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02010000&quot;)" style="float:left; width:90%;">查詢</a>
+<div class="clear"></div>
+<ul id="id_03_02010000" style="display:none;">
+<li id="id_03_02010100_1" style="padding-left:15px;">
+<img id="id_03_02010100_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02010100&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02010100&quot;)" style="float:left; width:90%;">總表</a>
+<div class="clear"></div>
+<ul id="id_03_02010100" style="display:none;">
+<li id="id_03_02010101_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_1.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02010102_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_1_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02010200_1" style="padding-left:15px;">
+<img id="id_03_02010200_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02010200&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02010200&quot;)" style="float:left; width:90%;">區分期貨與選擇權二類</a>
+<div class="clear"></div>
+<ul id="id_03_02010200" style="display:none;">
+<li id="id_03_02010201_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_2.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02010202_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_2_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02010300_1" style="padding-left:15px;">
+<img id="id_03_02010300_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02010300&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02010300&quot;)" style="float:left; width:90%;">區分各期貨契約</a>
+<div class="clear"></div>
+<ul id="id_03_02010300" style="display:none;">
+<li id="id_03_02010301_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_3.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02010302_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_3_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02010400_1" style="padding-left:15px;">
+<img id="id_03_02010400_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02010400&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02010400&quot;)" style="float:left; width:90%;">區分各選擇權契約</a>
+<div class="clear"></div>
+<ul id="id_03_02010400" style="display:none;">
+<li id="id_03_02010401_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_4.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02010402_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_4_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02010500_1" style="padding-left:15px;">
+<img id="id_03_02010500_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02010500&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02010500&quot;)" style="float:left; width:90%;">選擇權買賣權分計</a>
+<div class="clear"></div>
+<ul id="id_03_02010500" style="display:none;">
+<li id="id_03_02010501_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_5.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02010502_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_5_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="id_03_02020000_1" style="padding-left:15px;">
+<img id="id_03_02020000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02020000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02020000&quot;)" style="float:left; width:90%;">下載</a>
+<div class="clear"></div>
+<ul id="id_03_02020000" style="display:none;">
+<li id="id_03_02020100_1" style="padding-left:15px;">
+<img id="id_03_02020100_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02020100&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02020100&quot;)" style="float:left; width:90%;">總表</a>
+<div class="clear"></div>
+<ul id="id_03_02020100" style="display:none;">
+<li id="id_03_02020101_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_6.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02020102_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_6_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02020200_1" style="padding-left:15px;">
+<img id="id_03_02020200_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02020200&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02020200&quot;)" style="float:left; width:90%;">區分期貨與選擇權二類</a>
+<div class="clear"></div>
+<ul id="id_03_02020200" style="display:none;">
+<li id="id_03_02020201_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_7.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02020202_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_7_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02020300_1" style="padding-left:15px;">
+<img id="id_03_02020300_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02020300&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02020300&quot;)" style="float:left; width:90%;">區分各期貨契約</a>
+<div class="clear"></div>
+<ul id="id_03_02020300" style="display:none;">
+<li id="id_03_02020301_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_8.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02020302_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_8_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02020400_1" style="padding-left:15px;">
+<img id="id_03_02020400_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02020400&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02020400&quot;)" style="float:left; width:90%;">區分各選擇權契約</a>
+<div class="clear"></div>
+<ul id="id_03_02020400" style="display:none;">
+<li id="id_03_02020401_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_9.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02020402_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_9_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_02020500_1" style="padding-left:15px;">
+<img id="id_03_02020500_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_02020500&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_02020500&quot;)" style="float:left; width:90%;">選擇權買賣權分計</a>
+<div class="clear"></div>
+<ul id="id_03_02020500" style="display:none;">
+<li id="id_03_02020501_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_10.asp" style="float:left; width:90%;">依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_02020502_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_12_10_1.asp" style="float:left; width:90%;">依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_03000000_1" style="padding-left:5px;">
+<img id="id_03_03000000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_03000000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_03000000&quot;)" style="float:left; width:90%;">大額交易人未沖銷部位結構</a>
+<div class="clear"></div>
+<ul id="id_03_03000000" style="display:none;">
+<li id="id_03_03010000_1" style="padding-left:15px;">
+<img id="id_03_03010000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_03010000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_03010000&quot;)" style="float:left; width:90%;">查詢</a>
+<div class="clear"></div>
+<ul id="id_03_03010000" style="display:none;">
+<li id="id_03_03010100_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_8.asp" style="float:left; width:90%;">期貨大額交易人未沖銷部位結構表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_03010200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_9.asp" style="float:left; width:90%;">選擇權大額交易人未沖銷部位結構表</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_03020000_1" style="padding-left:15px;">
+<img id="id_03_03020000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_03020000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_03020000&quot;)" style="float:left; width:90%;">下載</a>
+<div class="clear"></div>
+<ul id="id_03_03020000" style="display:none;">
+<li id="id_03_03020100_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_8_1.asp" style="float:left; width:90%;">期貨大額交易人未沖銷部位資料下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_03020200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/7_9_1.asp" style="float:left; width:90%;">選擇權大額交易人未沖銷部位資料下載</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_04000000_1" style="padding-left:5px" class="select">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/3_5.asp" style="float:left; width:90%;">每日外幣參考匯率查詢</a>
+<div class="clear"></div>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_05000000_1" style="padding-left:5px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/AppForm.asp" style="float:left; width:90%;">交易歷史資料申請</a>
+<div class="clear"></div>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_06000000_1" style="padding-left:5px;">
+<img id="id_03_06000000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06000000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06000000&quot;)" style="float:left; width:90%;">資料下載專區</a>
+<div class="clear"></div>
+<ul id="id_03_06000000" style="display:none;">
+<li id="id_03_06010000_1" style="padding-left:15px;">
+<img id="id_03_06010000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06010000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06010000&quot;)" style="float:left; width:90%;">交易資訊</a>
+<div class="clear"></div>
+<ul id="id_03_06010000" style="display:none;">
+<li id="id_03_06010100_1" style="padding-left:15px;">
+<img id="id_03_06010100_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06010100&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06010100&quot;)" style="float:left; width:90%;">盤後資訊-期貨</a>
+<div class="clear"></div>
+<ul id="id_03_06010100" style="display:none;">
+<li id="id_03_06010101_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_1_2.asp" style="float:left; width:90%;">期貨每日交易行情下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010102_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_1_3.asp" style="float:left; width:90%;">前30個交易日期貨每筆成交資料</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010103_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_1_4.asp" style="float:left; width:90%;">前30個交易日期貨價差委託成交概況表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010104_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_1_5.asp" style="float:left; width:90%;">前30個交易日期貨價差每筆成交資料</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06010200_1" style="padding-left:15px;">
+<img id="id_03_06010200_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06010200&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06010200&quot;)" style="float:left; width:90%;">盤後資訊-選擇權</a>
+<div class="clear"></div>
+<ul id="id_03_06010200" style="display:none;">
+<li id="id_03_06010201_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_2_3.asp" style="float:left; width:90%;">選擇權每日交易行情下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010202_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_2_4.asp" style="float:left; width:90%;">前30個交易日選擇權每筆成交資料</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010203_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_7.asp" style="float:left; width:90%;">選擇權每日Delta值</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010204_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_PCRatio.asp" style="float:left; width:90%;">臺指選擇權Put/Call比</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06010300_1" style="padding-left:15px;">
+<img id="id_03_06010300_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06010300&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06010300&quot;)" style="float:left; width:90%;">盤後資訊-鉅額交易</a>
+<div class="clear"></div>
+<ul id="id_03_06010300" style="display:none;">
+<li id="id_03_06010301_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_3_1dl.asp" style="float:left; width:90%;">逐筆撮合之單式委託成交-下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010302_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_3_2dl.asp" style="float:left; width:90%;">逐筆撮合之組合式委託成交-下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010303_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_3_3dl.asp" style="float:left; width:90%;">議價申報成交-下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010304_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_3_5dl.asp" style="float:left; width:90%;">各商品成交資訊-下載</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06010400_1" style="padding-left:15px;">
+<img id="id_03_06010400_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06010400&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06010400&quot;)" style="float:left; width:90%;">三大法人-下載</a>
+<div class="clear"></div>
+<ul id="id_03_06010400" style="display:none;">
+<li id="id_03_06010401_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_6.asp" style="float:left; width:90%;">總表-依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010402_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_6_1.asp" style="float:left; width:90%;">總表-依週別</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010403_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_7.asp" style="float:left; width:90%;">區分期貨與選擇權二類-依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010404_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_7_1.asp" style="float:left; width:90%;">區分期貨與選擇權二類-依週別</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010405_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_8.asp" style="float:left; width:90%;">區分各期貨契約-依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010406_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_8_1.asp" style="float:left; width:90%;">區分各期貨契約-依週別</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010407_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_9.asp" style="float:left; width:90%;">區分各選擇權契約-依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010408_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_9_1.asp" style="float:left; width:90%;">區分各選擇權契約-依週別</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010409_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_10.asp" style="float:left; width:90%;">選擇權買賣權分計-依日期</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010410_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_12_10_1.asp" style="float:left; width:90%;">選擇權買賣權分計-依週別</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06010500_1" style="padding-left:15px;">
+<img id="id_03_06010500_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06010500&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06010500&quot;)" style="float:left; width:90%;">大額交易人未沖銷部位結構</a>
+<div class="clear"></div>
+<ul id="id_03_06010500" style="display:none;">
+<li id="id_03_06010501_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_8_1.asp" style="float:left; width:90%;">期貨大額交易人未沖銷部位資料下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06010502_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_7_9_1.asp" style="float:left; width:90%;">選擇權大額交易人未沖銷部位資料下載</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06010600_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/dl_3_5.asp" style="float:left; width:90%;">每日外幣參考匯率</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06020000_1" style="padding-left:15px;">
+<img id="id_03_06020000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06020000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06020000&quot;)" style="float:left; width:90%;">結算業務</a>
+<div class="clear"></div>
+<ul id="id_03_06020000" style="display:none;">
+<li id="id_03_06020100_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/5/FSPDownload.asp?menuid1=03" style="float:left; width:90%;">最後結算價一覽表-最後結算價檔案下載</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06020200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/5/PosSettledDownload.asp?menuid1=03" style="float:left; width:90%;">到期契約履約交割下載</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06030000_1" style="padding-left:15px;">
+<img id="id_03_06030000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06030000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06030000&quot;)" style="float:left; width:90%;">統計資料</a>
+<div class="clear"></div>
+<ul id="id_03_06030000" style="display:none;">
+<li id="id_03_06030100_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/DailyFCM.asp?menuid1=03" style="float:left; width:90%;">期貨商交易量日報表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030200_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/WeeklyFCM.asp?menuid1=03" style="float:left; width:90%;">期貨商交易量週報表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030300_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/MonthlyFCM.asp?menuid1=03" style="float:left; width:90%;">期貨商交易量月報表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030400_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/yearly.xls" target="_blank" style="float:left; width:90%;">期貨商交易量年報表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030500_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/trade_volume.xls" target="_blank" style="float:left; width:90%;">前一月份各商品每日交易量統計表</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030600_1" style="padding-left:15px;">
+<img id="id_03_06030600_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06030600&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06030600&quot;)" style="float:left; width:90%;">臺指選擇權波動率指數-以CBOE新VIX指數編製公式計算者</a>
+<div class="clear"></div>
+<ul id="id_03_06030600" style="display:none;">
+<li id="id_03_06030601_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/VIXMinQuotesNew.asp?menuid1=03" style="float:left; width:90%;">當月每分鐘之臺指選擇權波動率指數</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030602_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/VIXMinQuotes3MNew.asp?menuid1=03" style="float:left; width:90%;">前3個月每分鐘之臺指選擇權波動率指數</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030603_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/VIXDailyQuotes3MNew.asp?menuid1=03" style="float:left; width:90%;">前3個月每日收盤之臺指選擇權波動率指數</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+<li id="id_03_06030700_1" style="padding-left:15px;">
+<img id="id_03_06030700_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_06030700&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_06030700&quot;)" style="float:left; width:90%;">臺指選擇權波動率指數-以CBOE舊VIX指數編製公式計算者</a>
+<div class="clear"></div>
+<ul id="id_03_06030700" style="display:none;">
+<li id="id_03_06030701_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/VIXMinQuotesOld.asp?menuid1=03" style="float:left; width:90%;">當月每分鐘之臺指選擇權波動率指數</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030702_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/VIXMinQuotes3MOld.asp?menuid1=03" style="float:left; width:90%;">前3個月每分鐘之臺指選擇權波動率指數</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_06030703_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/7/VIXDailyQuotes3MOld.asp?menuid1=03" style="float:left; width:90%;">前3個月每日收盤之臺指選擇權波動率指數</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_07000000_1" style="padding-left:5px;">
+<img id="id_03_07000000_2" src="./taifex_files/level-open.jpg" onclick="javascript:menuclick(&#39;id_03_07000000&#39;)" style="cursor:pointer;float:left;">
+<a href="javascript:menuclick(&quot;id_03_07000000&quot;)" style="float:left; width:90%;">資訊廠商</a>
+<div class="clear"></div>
+<ul id="id_03_07000000" style="display:none;">
+<li id="id_03_07010000_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/InfoVendor.asp" style="float:left; width:90%;">資訊廠商</a>
+<div class="clear"></div>
+</li>
+<li id="id_03_07020000_1" style="padding-left:15px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/event/dbag/event.asp" target="_blank" style="float:left; width:90%;">授權德國交易所集團行銷</a>
+<div class="clear"></div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_08000000_1" style="padding-left:5px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://info512.taifex.com.tw/" target="_blank" style="float:left; width:90%;">台灣期貨交易所行情資訊網站</a>
+<div class="clear"></div>
+</li>
+</ul>
+</div>
+<div class="bg">
+<ul class="level-1">
+<li id="id_03_09000000_1" style="padding-left:5px">
+<img src="./taifex_files/level-li.jpg" style="float:left;">
+<a href="http://www.taifex.com.tw/chinese/3/TradeHalt.asp" style="float:left; width:90%;">訊息面暫停交易之股票期貨及選擇權</a>
+<div class="clear"></div>
+</li>
+</ul>
+</div>
+			
+<script type="text/javascript">
+//menuclose();
+document.getElementById('id_03_04000000_1').className='select';
+menuclick('id_03_04000000');
+menuclick('id_03_04000000');
+menuclick('id_03_04000000');
+
+//function menuclose(){
+//	
+//}
+function menuclick(id){
+	if ((id != '') && (document.getElementById(id) != null))
+	{
+		if (document.getElementById(id).style.display == "block")
+		{
+			//document.getElementById(id + '_1').className = "open";
+			document.getElementById(id + '_2').src = "../images/level-open.jpg";
+			document.getElementById(id).style.display = "none";
+		}
+		else
+		{
+			//document.getElementById(id + '_1').className = "close";
+			document.getElementById(id + '_2').src = "../images/level-close.jpg";
+			document.getElementById(id).style.display = "block";
+		}
+	}
+}
+</script>											
+            </div>
+        </div> 
+        <!--SidebarLeft End--> 
+        <!--SidebarRight Start-->
+      <div class="sidebar_right">
+
+   
+<form name="myform" method="post">    
+<input type="hidden" name="download" id="download" value=""> 
+  <script language="javascript">
+	function download1(){
+		document.myform.download.value="1";
+		document.myform.submit();
+
+	}
+	
+</script>  
+<script language="javascript">
+
+function doQuery(){
+	if (document.myform.datestart.value=="" && document.myform.dateend.value=="")	
+		alert('日期格式錯誤');
+	else
+	{
+		document.myform.download.value="";
+		var arr = document.myform.datestart.value.split("/");
+				document.myform.syear.value=arr[0];
+				document.myform.smonth.value=arr[1];
+				document.myform.sday.value=arr[2];
+		arr = document.myform.dateend.value.split("/");				
+				document.myform.eyear.value=arr[0];
+				document.myform.emonth.value=arr[1];
+				document.myform.eday.value=arr[2];
+				
+		document.myform.submit();
+	}
+} 	
+</script>
+<input type="hidden" name="hdn_gostartdate" value="2017/9/1" id="Hidden1">
+<input type="hidden" name="hdn_goenddate" value="2017/10/31" id="Hidden2">
+<input type="hidden" name="syear" id="syear" value="2017">
+<input type="hidden" name="smonth" id="smonth" value="9">
+<input type="hidden" name="sday" id="sday" value="1">
+<input type="hidden" name="eyear" id="eyear" value="2017">
+<input type="hidden" name="emonth" id="emonth" value="10">
+<input type="hidden" name="eday" id="eday" value="31">  
+          <div class="content" name="printhere" id="printhere">
+          	  <div class="title">
+                  <h2>每日外幣參考匯率查詢</h2>
+              </div>
+              
+              
+			  <div class="section">
+                    <table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="table_b">
+                        <tbody><tr>
+                            <th> 每日外幣參考匯率查詢 </th>
+                        </tr>
+                        <tr>
+                            <td><table border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tbody><tr>
+                                    <td align="right">日期(起)：</td>
+                                    <td align="left">
+                                  <input name="datestart" type="text" id="datestart" value="2017/9/1" onchange="" class="hasDatepicker"><button type="button" class="ui-datepicker-trigger"><img src="./taifex_files/calendar.gif" alt="日曆" title="日曆"></button>
+										   <script language="JavaScript">
+											$(document).ready(function(){ 
+											  $("#datestart").datepicker({showOn: "button",
+																			buttonText: "日曆",
+															buttonImage: "../images/calendar.gif"
+															});
+											  });
+										  </script>	
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">日期(迄)：</td>
+                                    <td align="left">
+                                  <input name="dateend" type="text" id="dateend" value="2017/10/31" onchange="" class="hasDatepicker"><button type="button" class="ui-datepicker-trigger"><img src="./taifex_files/calendar.gif" alt="日曆" title="日曆"></button>
+										   <script language="JavaScript">
+											$(document).ready(function(){ 
+											  $("#dateend").datepicker({showOn: "button",
+																			buttonText: "日曆",
+															buttonImage: "../images/calendar.gif"
+															});
+											  });
+										  </script>	
+                                  </td>
+                                </tr>
+                            </tbody></table></td>
+                        </tr>
+                        <tr class="ft">
+                            <td><input type="button" name="button4" id="button5" value="送出查詢" class="btn_orange" onclick="javascript:doQuery();">
+							<input type="button" value="檔案下載" onclick="download1();" class="btn_orange">
+							</td>
+                        </tr>
+                    </tbody></table>
+                </div>
+                <div class="section">
+                	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_c">
+                        <tbody>
+                          <tr bgcolor="#D0F0FF">
+                            <th width="10%" height="16"><div align="center">日期</div></th>
+                            <th width="10%"><div align="center">美元／新台幣</div></th>
+							<th width="10%"><div align="center">人民幣／新台幣</div></th>
+							<th width="10%"><div align="center">歐元／美元</div></th>
+							<th width="10%"><div align="center">美元／日幣</div></th>
+							<th width="10%"><div align="center">英鎊／美元</div></th>
+							<th width="10%"><div align="center">澳幣／美元</div></th>
+							<th width="10%"><div align="center">美元／港幣</div></th>
+							<th width="10%"><div align="center">美元／人民幣</div></th>
+							<th width="10%"><div align="center">美元／南非幣</div></th>
+							<th width="10%"><div align="center">紐幣／美元</div></th>
+                          </tr>
+   
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/1</td>
+	<td align="center" bgcolor="#FFFFFF">30.156</td>
+	<td align="center" bgcolor="#FFFFFF">4.584315</td>
+	<td align="center" bgcolor="#FFFFFF">1.1892</td>
+	<td align="center" bgcolor="#FFFFFF">110.1</td>
+	<td align="center" bgcolor="#FFFFFF">1.29145</td>
+	<td align="center" bgcolor="#FFFFFF">0.7936</td>
+	<td align="center" bgcolor="#FFFFFF">7.82595</td>
+	<td align="center" bgcolor="#FFFFFF">6.5781</td>
+	<td align="center" bgcolor="#FFFFFF">12.9461</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71595</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/4</td>
+	<td align="center" bgcolor="#FFFFFF">30.101</td>
+	<td align="center" bgcolor="#FFFFFF">4.608885</td>
+	<td align="center" bgcolor="#FFFFFF">1.1896</td>
+	<td align="center" bgcolor="#FFFFFF">109.46</td>
+	<td align="center" bgcolor="#FFFFFF">1.2942</td>
+	<td align="center" bgcolor="#FFFFFF">0.7956</td>
+	<td align="center" bgcolor="#FFFFFF">7.82535</td>
+	<td align="center" bgcolor="#FFFFFF">6.5311</td>
+	<td align="center" bgcolor="#FFFFFF">12.966</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71705</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/5</td>
+	<td align="center" bgcolor="#FFFFFF">30.07</td>
+	<td align="center" bgcolor="#FFFFFF">4.586457</td>
+	<td align="center" bgcolor="#FFFFFF">1.1881</td>
+	<td align="center" bgcolor="#FFFFFF">109.455</td>
+	<td align="center" bgcolor="#FFFFFF">1.29255</td>
+	<td align="center" bgcolor="#FFFFFF">0.79635</td>
+	<td align="center" bgcolor="#FFFFFF">7.82525</td>
+	<td align="center" bgcolor="#FFFFFF">6.55625</td>
+	<td align="center" bgcolor="#FFFFFF">12.9729</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71775</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/6</td>
+	<td align="center" bgcolor="#FFFFFF">30.105</td>
+	<td align="center" bgcolor="#FFFFFF">4.606336</td>
+	<td align="center" bgcolor="#FFFFFF">1.1944</td>
+	<td align="center" bgcolor="#FFFFFF">108.71</td>
+	<td align="center" bgcolor="#FFFFFF">1.3042</td>
+	<td align="center" bgcolor="#FFFFFF">0.7991</td>
+	<td align="center" bgcolor="#FFFFFF">7.8246</td>
+	<td align="center" bgcolor="#FFFFFF">6.53555</td>
+	<td align="center" bgcolor="#FFFFFF">12.90365</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72335</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/7</td>
+	<td align="center" bgcolor="#FFFFFF">30.062</td>
+	<td align="center" bgcolor="#FFFFFF">4.619808</td>
+	<td align="center" bgcolor="#FFFFFF">1.19485</td>
+	<td align="center" bgcolor="#FFFFFF">109.015</td>
+	<td align="center" bgcolor="#FFFFFF">1.3046</td>
+	<td align="center" bgcolor="#FFFFFF">0.80015</td>
+	<td align="center" bgcolor="#FFFFFF">7.8196</td>
+	<td align="center" bgcolor="#FFFFFF">6.5072</td>
+	<td align="center" bgcolor="#FFFFFF">12.8172</td>	
+	<td align="center" bgcolor="#FFFFFF">0.719</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/8</td>
+	<td align="center" bgcolor="#FFFFFF">30.006</td>
+	<td align="center" bgcolor="#FFFFFF">4.634097</td>
+	<td align="center" bgcolor="#FFFFFF">1.2049</td>
+	<td align="center" bgcolor="#FFFFFF">107.74</td>
+	<td align="center" bgcolor="#FFFFFF">1.31365</td>
+	<td align="center" bgcolor="#FFFFFF">0.80895</td>
+	<td align="center" bgcolor="#FFFFFF">7.80875</td>
+	<td align="center" bgcolor="#FFFFFF">6.47505</td>
+	<td align="center" bgcolor="#FFFFFF">12.8257</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72955</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/11</td>
+	<td align="center" bgcolor="#FFFFFF">30.026</td>
+	<td align="center" bgcolor="#FFFFFF">4.601394</td>
+	<td align="center" bgcolor="#FFFFFF">1.20165</td>
+	<td align="center" bgcolor="#FFFFFF">108.48</td>
+	<td align="center" bgcolor="#FFFFFF">1.31945</td>
+	<td align="center" bgcolor="#FFFFFF">0.80475</td>
+	<td align="center" bgcolor="#FFFFFF">7.8141</td>
+	<td align="center" bgcolor="#FFFFFF">6.5254</td>
+	<td align="center" bgcolor="#FFFFFF">12.9005</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7266</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/12</td>
+	<td align="center" bgcolor="#FFFFFF">30.03</td>
+	<td align="center" bgcolor="#FFFFFF">4.591137</td>
+	<td align="center" bgcolor="#FFFFFF">1.197</td>
+	<td align="center" bgcolor="#FFFFFF">109.65</td>
+	<td align="center" bgcolor="#FFFFFF">1.3202</td>
+	<td align="center" bgcolor="#FFFFFF">0.80405</td>
+	<td align="center" bgcolor="#FFFFFF">7.81305</td>
+	<td align="center" bgcolor="#FFFFFF">6.54085</td>
+	<td align="center" bgcolor="#FFFFFF">12.8931</td>	
+	<td align="center" bgcolor="#FFFFFF">0.73045</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/13</td>
+	<td align="center" bgcolor="#FFFFFF">30.056</td>
+	<td align="center" bgcolor="#FFFFFF">4.60509</td>
+	<td align="center" bgcolor="#FFFFFF">1.19925</td>
+	<td align="center" bgcolor="#FFFFFF">109.98</td>
+	<td align="center" bgcolor="#FFFFFF">1.3313</td>
+	<td align="center" bgcolor="#FFFFFF">0.80405</td>
+	<td align="center" bgcolor="#FFFFFF">7.811</td>
+	<td align="center" bgcolor="#FFFFFF">6.5267</td>
+	<td align="center" bgcolor="#FFFFFF">13.0332</td>	
+	<td align="center" bgcolor="#FFFFFF">0.73025</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/14</td>
+	<td align="center" bgcolor="#FFFFFF">30.106</td>
+	<td align="center" bgcolor="#FFFFFF">4.591617</td>
+	<td align="center" bgcolor="#FFFFFF">1.1897</td>
+	<td align="center" bgcolor="#FFFFFF">110.41</td>
+	<td align="center" bgcolor="#FFFFFF">1.32065</td>
+	<td align="center" bgcolor="#FFFFFF">0.7999</td>
+	<td align="center" bgcolor="#FFFFFF">7.8119</td>
+	<td align="center" bgcolor="#FFFFFF">6.55675</td>
+	<td align="center" bgcolor="#FFFFFF">13.1408</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72385</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/15</td>
+	<td align="center" bgcolor="#FFFFFF">30.075</td>
+	<td align="center" bgcolor="#FFFFFF">4.592152</td>
+	<td align="center" bgcolor="#FFFFFF">1.19195</td>
+	<td align="center" bgcolor="#FFFFFF">110.72</td>
+	<td align="center" bgcolor="#FFFFFF">1.34325</td>
+	<td align="center" bgcolor="#FFFFFF">0.8001</td>
+	<td align="center" bgcolor="#FFFFFF">7.8128</td>
+	<td align="center" bgcolor="#FFFFFF">6.5492</td>
+	<td align="center" bgcolor="#FFFFFF">13.1348</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72435</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/18</td>
+	<td align="center" bgcolor="#FFFFFF">30.108</td>
+	<td align="center" bgcolor="#FFFFFF">4.590266</td>
+	<td align="center" bgcolor="#FFFFFF">1.1929</td>
+	<td align="center" bgcolor="#FFFFFF">111.38</td>
+	<td align="center" bgcolor="#FFFFFF">1.35595</td>
+	<td align="center" bgcolor="#FFFFFF">0.8007</td>
+	<td align="center" bgcolor="#FFFFFF">7.8162</td>
+	<td align="center" bgcolor="#FFFFFF">6.5591</td>
+	<td align="center" bgcolor="#FFFFFF">13.2102</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7301</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/19</td>
+	<td align="center" bgcolor="#FFFFFF">30.137</td>
+	<td align="center" bgcolor="#FFFFFF">4.57781</td>
+	<td align="center" bgcolor="#FFFFFF">1.1998</td>
+	<td align="center" bgcolor="#FFFFFF">111.72</td>
+	<td align="center" bgcolor="#FFFFFF">1.35175</td>
+	<td align="center" bgcolor="#FFFFFF">0.79845</td>
+	<td align="center" bgcolor="#FFFFFF">7.80325</td>
+	<td align="center" bgcolor="#FFFFFF">6.5833</td>
+	<td align="center" bgcolor="#FFFFFF">13.3314</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72855</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/20</td>
+	<td align="center" bgcolor="#FFFFFF">30.132</td>
+	<td align="center" bgcolor="#FFFFFF">4.585488</td>
+	<td align="center" bgcolor="#FFFFFF">1.20075</td>
+	<td align="center" bgcolor="#FFFFFF">111.435</td>
+	<td align="center" bgcolor="#FFFFFF">1.35215</td>
+	<td align="center" bgcolor="#FFFFFF">0.8036</td>
+	<td align="center" bgcolor="#FFFFFF">7.8079</td>
+	<td align="center" bgcolor="#FFFFFF">6.57115</td>
+	<td align="center" bgcolor="#FFFFFF">13.2789</td>	
+	<td align="center" bgcolor="#FFFFFF">0.73485</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/21</td>
+	<td align="center" bgcolor="#FFFFFF">30.208</td>
+	<td align="center" bgcolor="#FFFFFF">4.582886</td>
+	<td align="center" bgcolor="#FFFFFF">1.191</td>
+	<td align="center" bgcolor="#FFFFFF">112.515</td>
+	<td align="center" bgcolor="#FFFFFF">1.3502</td>
+	<td align="center" bgcolor="#FFFFFF">0.7962</td>
+	<td align="center" bgcolor="#FFFFFF">7.80585</td>
+	<td align="center" bgcolor="#FFFFFF">6.5915</td>
+	<td align="center" bgcolor="#FFFFFF">13.3555</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7322</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/22</td>
+	<td align="center" bgcolor="#FFFFFF">30.191</td>
+	<td align="center" bgcolor="#FFFFFF">4.58864</td>
+	<td align="center" bgcolor="#FFFFFF">1.1993</td>
+	<td align="center" bgcolor="#FFFFFF">111.97</td>
+	<td align="center" bgcolor="#FFFFFF">1.35775</td>
+	<td align="center" bgcolor="#FFFFFF">0.79535</td>
+	<td align="center" bgcolor="#FFFFFF">7.80805</td>
+	<td align="center" bgcolor="#FFFFFF">6.5795</td>
+	<td align="center" bgcolor="#FFFFFF">13.2015</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7317</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/25</td>
+	<td align="center" bgcolor="#FFFFFF">30.172</td>
+	<td align="center" bgcolor="#FFFFFF">4.565325</td>
+	<td align="center" bgcolor="#FFFFFF">1.1908</td>
+	<td align="center" bgcolor="#FFFFFF">112.25</td>
+	<td align="center" bgcolor="#FFFFFF">1.35265</td>
+	<td align="center" bgcolor="#FFFFFF">0.79595</td>
+	<td align="center" bgcolor="#FFFFFF">7.8132</td>
+	<td align="center" bgcolor="#FFFFFF">6.60895</td>
+	<td align="center" bgcolor="#FFFFFF">13.2866</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72915</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/26</td>
+	<td align="center" bgcolor="#FFFFFF">30.216</td>
+	<td align="center" bgcolor="#FFFFFF">4.562556</td>
+	<td align="center" bgcolor="#FFFFFF">1.1813</td>
+	<td align="center" bgcolor="#FFFFFF">111.67</td>
+	<td align="center" bgcolor="#FFFFFF">1.3478</td>
+	<td align="center" bgcolor="#FFFFFF">0.7922</td>
+	<td align="center" bgcolor="#FFFFFF">7.81375</td>
+	<td align="center" bgcolor="#FFFFFF">6.6226</td>
+	<td align="center" bgcolor="#FFFFFF">13.3282</td>	
+	<td align="center" bgcolor="#FFFFFF">0.722</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/27</td>
+	<td align="center" bgcolor="#FFFFFF">30.303</td>
+	<td align="center" bgcolor="#FFFFFF">4.568329</td>
+	<td align="center" bgcolor="#FFFFFF">1.1749</td>
+	<td align="center" bgcolor="#FFFFFF">112.72</td>
+	<td align="center" bgcolor="#FFFFFF">1.3389</td>
+	<td align="center" bgcolor="#FFFFFF">0.78525</td>
+	<td align="center" bgcolor="#FFFFFF">7.81005</td>
+	<td align="center" bgcolor="#FFFFFF">6.6333</td>
+	<td align="center" bgcolor="#FFFFFF">13.4698</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71975</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/28</td>
+	<td align="center" bgcolor="#FFFFFF">30.405</td>
+	<td align="center" bgcolor="#FFFFFF">4.560568</td>
+	<td align="center" bgcolor="#FFFFFF">1.1769</td>
+	<td align="center" bgcolor="#FFFFFF">112.715</td>
+	<td align="center" bgcolor="#FFFFFF">1.33755</td>
+	<td align="center" bgcolor="#FFFFFF">0.78285</td>
+	<td align="center" bgcolor="#FFFFFF">7.80925</td>
+	<td align="center" bgcolor="#FFFFFF">6.66695</td>
+	<td align="center" bgcolor="#FFFFFF">13.5827</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7203</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/29</td>
+	<td align="center" bgcolor="#FFFFFF">30.336</td>
+	<td align="center" bgcolor="#FFFFFF">4.563353</td>
+	<td align="center" bgcolor="#FFFFFF">1.18025</td>
+	<td align="center" bgcolor="#FFFFFF">112.425</td>
+	<td align="center" bgcolor="#FFFFFF">1.3416</td>
+	<td align="center" bgcolor="#FFFFFF">0.7846</td>
+	<td align="center" bgcolor="#FFFFFF">7.8108</td>
+	<td align="center" bgcolor="#FFFFFF">6.64775</td>
+	<td align="center" bgcolor="#FFFFFF">13.49705</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72185</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/9/30</td>
+	<td align="center" bgcolor="#FFFFFF">30.305</td>
+	<td align="center" bgcolor="#FFFFFF">4.558781</td>
+	<td align="center" bgcolor="#FFFFFF">1.1815</td>
+	<td align="center" bgcolor="#FFFFFF">112.465</td>
+	<td align="center" bgcolor="#FFFFFF">1.3397</td>
+	<td align="center" bgcolor="#FFFFFF">0.78285</td>
+	<td align="center" bgcolor="#FFFFFF">7.8104</td>
+	<td align="center" bgcolor="#FFFFFF">6.6476</td>
+	<td align="center" bgcolor="#FFFFFF">13.50275</td>	
+	<td align="center" bgcolor="#FFFFFF">0.72075</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/2</td>
+	<td align="center" bgcolor="#FFFFFF">30.413</td>
+	<td align="center" bgcolor="#FFFFFF">4.555381</td>
+	<td align="center" bgcolor="#FFFFFF">1.17425</td>
+	<td align="center" bgcolor="#FFFFFF">112.945</td>
+	<td align="center" bgcolor="#FFFFFF">1.33255</td>
+	<td align="center" bgcolor="#FFFFFF">0.7805</td>
+	<td align="center" bgcolor="#FFFFFF">7.81245</td>
+	<td align="center" bgcolor="#FFFFFF">6.6763</td>
+	<td align="center" bgcolor="#FFFFFF">13.63465</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71765</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/3</td>
+	<td align="center" bgcolor="#FFFFFF">30.45</td>
+	<td align="center" bgcolor="#FFFFFF">4.566647</td>
+	<td align="center" bgcolor="#FFFFFF">1.17455</td>
+	<td align="center" bgcolor="#FFFFFF">113.09</td>
+	<td align="center" bgcolor="#FFFFFF">1.3281</td>
+	<td align="center" bgcolor="#FFFFFF">0.78145</td>
+	<td align="center" bgcolor="#FFFFFF">7.8114</td>
+	<td align="center" bgcolor="#FFFFFF">6.6679</td>
+	<td align="center" bgcolor="#FFFFFF">13.634</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7174</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/5</td>
+	<td align="center" bgcolor="#FFFFFF">30.35</td>
+	<td align="center" bgcolor="#FFFFFF">4.56807</td>
+	<td align="center" bgcolor="#FFFFFF">1.1774</td>
+	<td align="center" bgcolor="#FFFFFF">112.67</td>
+	<td align="center" bgcolor="#FFFFFF">1.3196</td>
+	<td align="center" bgcolor="#FFFFFF">0.78315</td>
+	<td align="center" bgcolor="#FFFFFF">7.8079</td>
+	<td align="center" bgcolor="#FFFFFF">6.64395</td>
+	<td align="center" bgcolor="#FFFFFF">13.5967</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71595</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/6</td>
+	<td align="center" bgcolor="#FFFFFF">30.376</td>
+	<td align="center" bgcolor="#FFFFFF">4.56451</td>
+	<td align="center" bgcolor="#FFFFFF">1.16925</td>
+	<td align="center" bgcolor="#FFFFFF">113.04</td>
+	<td align="center" bgcolor="#FFFFFF">1.30655</td>
+	<td align="center" bgcolor="#FFFFFF">0.7771</td>
+	<td align="center" bgcolor="#FFFFFF">7.80625</td>
+	<td align="center" bgcolor="#FFFFFF">6.6548</td>
+	<td align="center" bgcolor="#FFFFFF">13.7023</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7104</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/11</td>
+	<td align="center" bgcolor="#FFFFFF">30.232</td>
+	<td align="center" bgcolor="#FFFFFF">4.597773</td>
+	<td align="center" bgcolor="#FFFFFF">1.184</td>
+	<td align="center" bgcolor="#FFFFFF">112.26</td>
+	<td align="center" bgcolor="#FFFFFF">1.3206</td>
+	<td align="center" bgcolor="#FFFFFF">0.779</td>
+	<td align="center" bgcolor="#FFFFFF">7.80405</td>
+	<td align="center" bgcolor="#FFFFFF">6.57535</td>
+	<td align="center" bgcolor="#FFFFFF">13.5859</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7073</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/12</td>
+	<td align="center" bgcolor="#FFFFFF">30.213</td>
+	<td align="center" bgcolor="#FFFFFF">4.588599</td>
+	<td align="center" bgcolor="#FFFFFF">1.1862</td>
+	<td align="center" bgcolor="#FFFFFF">112.28</td>
+	<td align="center" bgcolor="#FFFFFF">1.32455</td>
+	<td align="center" bgcolor="#FFFFFF">0.78245</td>
+	<td align="center" bgcolor="#FFFFFF">7.80695</td>
+	<td align="center" bgcolor="#FFFFFF">6.58435</td>
+	<td align="center" bgcolor="#FFFFFF">13.48205</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7112</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/13</td>
+	<td align="center" bgcolor="#FFFFFF">30.185</td>
+	<td align="center" bgcolor="#FFFFFF">4.58815</td>
+	<td align="center" bgcolor="#FFFFFF">1.1828</td>
+	<td align="center" bgcolor="#FFFFFF">112</td>
+	<td align="center" bgcolor="#FFFFFF">1.33145</td>
+	<td align="center" bgcolor="#FFFFFF">0.78435</td>
+	<td align="center" bgcolor="#FFFFFF">7.8072</td>
+	<td align="center" bgcolor="#FFFFFF">6.5789</td>
+	<td align="center" bgcolor="#FFFFFF">13.38435</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71495</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/16</td>
+	<td align="center" bgcolor="#FFFFFF">30.158</td>
+	<td align="center" bgcolor="#FFFFFF">4.581694</td>
+	<td align="center" bgcolor="#FFFFFF">1.17905</td>
+	<td align="center" bgcolor="#FFFFFF">111.755</td>
+	<td align="center" bgcolor="#FFFFFF">1.3299</td>
+	<td align="center" bgcolor="#FFFFFF">0.78815</td>
+	<td align="center" bgcolor="#FFFFFF">7.80905</td>
+	<td align="center" bgcolor="#FFFFFF">6.5823</td>
+	<td align="center" bgcolor="#FFFFFF">13.2957</td>	
+	<td align="center" bgcolor="#FFFFFF">0.7182</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/17</td>
+	<td align="center" bgcolor="#FFFFFF">30.205</td>
+	<td align="center" bgcolor="#FFFFFF">4.569563</td>
+	<td align="center" bgcolor="#FFFFFF">1.17735</td>
+	<td align="center" bgcolor="#FFFFFF">112.165</td>
+	<td align="center" bgcolor="#FFFFFF">1.32835</td>
+	<td align="center" bgcolor="#FFFFFF">0.7856</td>
+	<td align="center" bgcolor="#FFFFFF">7.80775</td>
+	<td align="center" bgcolor="#FFFFFF">6.61005</td>
+	<td align="center" bgcolor="#FFFFFF">13.3128</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71785</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/18</td>
+	<td align="center" bgcolor="#FFFFFF">30.2</td>
+	<td align="center" bgcolor="#FFFFFF">4.565213</td>
+	<td align="center" bgcolor="#FFFFFF">1.1763</td>
+	<td align="center" bgcolor="#FFFFFF">112.51</td>
+	<td align="center" bgcolor="#FFFFFF">1.31855</td>
+	<td align="center" bgcolor="#FFFFFF">0.78365</td>
+	<td align="center" bgcolor="#FFFFFF">7.80815</td>
+	<td align="center" bgcolor="#FFFFFF">6.61525</td>
+	<td align="center" bgcolor="#FFFFFF">13.45155</td>	
+	<td align="center" bgcolor="#FFFFFF">0.71355</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/19</td>
+	<td align="center" bgcolor="#FFFFFF">30.23</td>
+	<td align="center" bgcolor="#FFFFFF">4.56074</td>
+	<td align="center" bgcolor="#FFFFFF">1.1795</td>
+	<td align="center" bgcolor="#FFFFFF">112.65</td>
+	<td align="center" bgcolor="#FFFFFF">1.31665</td>
+	<td align="center" bgcolor="#FFFFFF">0.7861</td>
+	<td align="center" bgcolor="#FFFFFF">7.8027</td>
+	<td align="center" bgcolor="#FFFFFF">6.6283</td>
+	<td align="center" bgcolor="#FFFFFF">13.5436</td>	
+	<td align="center" bgcolor="#FFFFFF">0.70415</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/20</td>
+	<td align="center" bgcolor="#FFFFFF">30.241</td>
+	<td align="center" bgcolor="#FFFFFF">4.56751</td>
+	<td align="center" bgcolor="#FFFFFF">1.1806</td>
+	<td align="center" bgcolor="#FFFFFF">113.41</td>
+	<td align="center" bgcolor="#FFFFFF">1.31315</td>
+	<td align="center" bgcolor="#FFFFFF">0.78415</td>
+	<td align="center" bgcolor="#FFFFFF">7.80335</td>
+	<td align="center" bgcolor="#FFFFFF">6.6209</td>
+	<td align="center" bgcolor="#FFFFFF">13.668</td>	
+	<td align="center" bgcolor="#FFFFFF">0.6982</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/23</td>
+	<td align="center" bgcolor="#FFFFFF">30.262</td>
+	<td align="center" bgcolor="#FFFFFF">4.557487</td>
+	<td align="center" bgcolor="#FFFFFF">1.17545</td>
+	<td align="center" bgcolor="#FFFFFF">113.705</td>
+	<td align="center" bgcolor="#FFFFFF">1.31745</td>
+	<td align="center" bgcolor="#FFFFFF">0.7818</td>
+	<td align="center" bgcolor="#FFFFFF">7.8029</td>
+	<td align="center" bgcolor="#FFFFFF">6.64005</td>
+	<td align="center" bgcolor="#FFFFFF">13.7375</td>	
+	<td align="center" bgcolor="#FFFFFF">0.69745</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/24</td>
+	<td align="center" bgcolor="#FFFFFF">30.27</td>
+	<td align="center" bgcolor="#FFFFFF">4.560932</td>
+	<td align="center" bgcolor="#FFFFFF">1.1761</td>
+	<td align="center" bgcolor="#FFFFFF">113.695</td>
+	<td align="center" bgcolor="#FFFFFF">1.31925</td>
+	<td align="center" bgcolor="#FFFFFF">0.7781</td>
+	<td align="center" bgcolor="#FFFFFF">7.80435</td>
+	<td align="center" bgcolor="#FFFFFF">6.6368</td>
+	<td align="center" bgcolor="#FFFFFF">13.73225</td>	
+	<td align="center" bgcolor="#FFFFFF">0.6928</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/25</td>
+	<td align="center" bgcolor="#FFFFFF">30.266</td>
+	<td align="center" bgcolor="#FFFFFF">4.557152</td>
+	<td align="center" bgcolor="#FFFFFF">1.1767</td>
+	<td align="center" bgcolor="#FFFFFF">113.86</td>
+	<td align="center" bgcolor="#FFFFFF">1.3132</td>
+	<td align="center" bgcolor="#FFFFFF">0.77135</td>
+	<td align="center" bgcolor="#FFFFFF">7.8033</td>
+	<td align="center" bgcolor="#FFFFFF">6.64145</td>
+	<td align="center" bgcolor="#FFFFFF">13.7302</td>	
+	<td align="center" bgcolor="#FFFFFF">0.6891</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/26</td>
+	<td align="center" bgcolor="#FFFFFF">30.229</td>
+	<td align="center" bgcolor="#FFFFFF">4.554422</td>
+	<td align="center" bgcolor="#FFFFFF">1.18175</td>
+	<td align="center" bgcolor="#FFFFFF">113.76</td>
+	<td align="center" bgcolor="#FFFFFF">1.32375</td>
+	<td align="center" bgcolor="#FFFFFF">0.7687</td>
+	<td align="center" bgcolor="#FFFFFF">7.80165</td>
+	<td align="center" bgcolor="#FFFFFF">6.6373</td>
+	<td align="center" bgcolor="#FFFFFF">14.1916</td>	
+	<td align="center" bgcolor="#FFFFFF">0.6874</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/27</td>
+	<td align="center" bgcolor="#FFFFFF">30.277</td>
+	<td align="center" bgcolor="#FFFFFF">4.550936</td>
+	<td align="center" bgcolor="#FFFFFF">1.1631</td>
+	<td align="center" bgcolor="#FFFFFF">114.11</td>
+	<td align="center" bgcolor="#FFFFFF">1.3075</td>
+	<td align="center" bgcolor="#FFFFFF">0.76415</td>
+	<td align="center" bgcolor="#FFFFFF">7.8037</td>
+	<td align="center" bgcolor="#FFFFFF">6.6529</td>
+	<td align="center" bgcolor="#FFFFFF">14.30395</td>	
+	<td align="center" bgcolor="#FFFFFF">0.68355</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/30</td>
+	<td align="center" bgcolor="#FFFFFF">30.205</td>
+	<td align="center" bgcolor="#FFFFFF">4.542892</td>
+	<td align="center" bgcolor="#FFFFFF">1.1627</td>
+	<td align="center" bgcolor="#FFFFFF">113.7</td>
+	<td align="center" bgcolor="#FFFFFF">1.3163</td>
+	<td align="center" bgcolor="#FFFFFF">0.76745</td>
+	<td align="center" bgcolor="#FFFFFF">7.79985</td>
+	<td align="center" bgcolor="#FFFFFF">6.64885</td>
+	<td align="center" bgcolor="#FFFFFF">14.087</td>	
+	<td align="center" bgcolor="#FFFFFF">0.68515</td>	
+	</tr>
+
+	<tr>
+	<td height="16" bgcolor="#FFFFFF" class="13bk" align="center">2017/10/31</td>
+	<td align="center" bgcolor="#FFFFFF">30.17</td>
+	<td align="center" bgcolor="#FFFFFF">4.551175</td>
+	<td align="center" bgcolor="#FFFFFF">1.1644</td>
+	<td align="center" bgcolor="#FFFFFF">113.065</td>
+	<td align="center" bgcolor="#FFFFFF">1.32145</td>
+	<td align="center" bgcolor="#FFFFFF">0.7679</td>
+	<td align="center" bgcolor="#FFFFFF">7.8016</td>
+	<td align="center" bgcolor="#FFFFFF">6.62905</td>
+	<td align="center" bgcolor="#FFFFFF">14.06155</td>	
+	<td align="center" bgcolor="#FFFFFF">0.68485</td>	
+	</tr>
+
+                          
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                	<h4>備註：</h4>
+					<p></p>
+					<table border="0">
+					<tbody><tr><td valign="top"><p>(1)</p></td><td><p>本功能查詢結果係本公司每日收盤時點公告執行盤後洗價與保證金計算之匯率資料，與中央銀行(<a href="http://www.cbc.gov.tw/">www.cbc.gov.tw</a>)每日公告台北外匯經紀股份有限公司收盤匯率之時點與匯率不同。</p></td></tr>
+					<tr><td valign="top"><p>(2)</p></td><td><p>「人民幣兌新台幣匯率」採「人民幣兌美元匯率」乘以「美元兌新台幣匯率」後，再四捨五入至小數後6位，非市場報價資訊。</p></td></tr>
+					</tbody></table>					
+                </div>
+              
+              
+              <script language="javascript">
+function printcontent(){
+	var s1 = document.getElementById("printhere").innerHTML;
+	var a1 = s1.search(/javascript:/i);
+	while (a1 >= 0){
+		s1 = s1.replace(/javascript:/i , "");
+		a1 = s1.search(/javascript:/i);
+	}
+	a1 = s1.search(/script/i);
+	while (a1 >= 0){
+		s1 = s1.replace(/script/i , "div style='display:none' ");
+		a1 = s1.search(/script/i);
+	}
+	
+
+	var printPage = window.open("","printPage","");
+	printPage.document.open();
+	printPage.document.write("<HTML><head><title>臺灣期貨交易所</title>");
+	printPage.document.write("<link rel='STYLESHEET' type='text/css' href='../js/rich_calendar/rich_calendar.css' />");
+	printPage.document.write("<link rel='stylesheet' type='text/css' href='../css/global.css' />");
+	printPage.document.write("<link rel='stylesheet' type='text/css' href='../css/content.css' />");
+	printPage.document.write("<link rel='stylesheet' type='text/css' href='../css/con_2.css' />");
+	printPage.document.write("</head><BODY onload='window.print();window.close();'>");
+	printPage.document.write("<div class='content'>");
+	printPage.document.write(s1);
+	printPage.document.write("</div>");
+	printPage.document.close("</BODY></HTML>");
+}
+</script>                  
+              <div class="section center"> <a href="javascript:printcontent();"><img src="./taifex_files/btn_print.jpg"></a></div>
+          </div>
+</form>          
+          
+      </div>
+      <!--SidebarRight End--> 
+    </div>
+    <!--Container End--> 
+    <!--Footer Start-->
+    
+  <div class="fat-footer">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+ <td width="20%" align="left" valign="top"><a href="http://www.taifex.com.tw/chinese/3/7_12_1.asp" class="m-one" title="交易資訊">交易資訊</a></td>
+ <td width="20%" align="left" valign="top"><a href="http://www.taifex.com.tw/chinese/4/MarketFramework.asp" class="m-one" title="交易制度">交易制度</a></td>
+ <td width="20%" align="left" valign="top"><a href="http://www.taifex.com.tw/chinese/5/Clearing.asp" class="m-one" title="結算業務">結算業務</a></td>
+ <td width="20%" align="left" valign="top"><a href="http://www.taifex.com.tw/chinese/7/AnnualTrading.asp" class="m-one" title="統計資料">統計資料</a></td>
+ <td width="20%" align="left" valign="top"><a href="http://www.taifex.com.tw/chinese/11/News1.asp" class="m-one" title="最新消息">最新消息</a></td>
+</tr><tr>
+<td width="20%" align="left" valign="top">
+<div class="footer_list">
+<ul><li><a href="http://www.taifex.com.tw/chinese/3/3_1_1.asp" class="m-two" title="交易資訊">交易資訊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/7_12_1.asp" class="m-two" title="三大法人">三大法人</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/7_8.asp" class="m-two" title="大額交易人未沖銷部位結構">大額交易人未沖銷部位結構</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/3_5.asp" class="m-two" title="每日外幣參考匯率查詢">每日外幣參考匯率查詢</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/AppForm.asp" class="m-two" title="交易歷史資料申請">交易歷史資料申請</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/dl_3_1_2.asp" class="m-two" title="資料下載專區">資料下載專區</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/InfoVendor.asp" class="m-two" title="資訊廠商">資訊廠商</a></li>
+<li><a href="http://info512.taifex.com.tw/" target="_blank" class="m-two" title="台灣期貨交易所行情資訊網站">台灣期貨交易所行情資訊網站</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/3/TradeHalt.asp" class="m-two" title="訊息面暫停交易之股票期貨及選擇權">訊息面暫停交易之股票期貨及選擇權</a></li>
+</ul></div></td><td width="20%" align="left" valign="top">
+<div class="footer_list">
+<ul><li><a href="http://www.taifex.com.tw/chinese/4/MarketFramework.asp" class="m-two" title="交易制度">交易制度</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/FeeSchedules.asp" class="m-two" title="費率表">費率表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/TradingSystem.asp" class="m-two" title="電子交易系統">電子交易系統</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/TraderPL.asp" class="m-two" title="部位限制">部位限制</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/FCMList.asp" class="m-two" title="期貨商名冊">期貨商名冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/Calendar.asp" class="m-two" title="行事曆">行事曆</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/ContractAdj.asp" class="m-two" title="股票期貨/選擇權契約相關資訊">股票期貨/選擇權契約相關資訊</a></li>
+</ul></div></td><td width="20%" align="left" valign="top">
+<div class="footer_list">
+<ul><li><a href="http://www.taifex.com.tw/chinese/5/ClrProcess.asp" class="m-two" title="結算制度">結算制度</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/IndexMargining.asp" class="m-two" title="保證金">保證金</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/SafeguardSystem.asp" class="m-two" title="財務安全保衛系統">財務安全保衛系統</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/CMCriteria.asp" class="m-two" title="結算會員資格標準">結算會員資格標準</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/CMList2.asp" class="m-two" title="結算會員名冊">結算會員名冊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/PositionManagement.asp" class="m-two" title="部位管理">部位管理</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/FutIndxFSP.asp" class="m-two" title="最後結算價一覽表">最後結算價一覽表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/FutIndxPosSettled.asp" class="m-two" title="到期契約履約交割說明">到期契約履約交割說明</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/5/SettledBond.asp" class="m-two" title="可交割債券轉換因子表">可交割債券轉換因子表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/4/FeeSchedules.asp?menuid1=05" class="m-two" title="費率表">費率表</a></li>
+</ul></div></td><td width="20%" align="left" valign="top">
+<div class="footer_list">
+<ul><li><a href="http://www.taifex.com.tw/chinese/7/DailyFCM.asp" class="m-two" title="期貨商交易量日報表">期貨商交易量日報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/WeeklyFCM.asp" class="m-two" title="期貨商交易量週報表">期貨商交易量週報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/MonthlyFCM.asp" class="m-two" title="期貨商交易量月報表">期貨商交易量月報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/YearlyFCM.asp" class="m-two" title="期貨商交易量年報表">期貨商交易量年報表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/AnnualTrading.asp" class="m-two" title="各商品年成交量統計表">各商品年成交量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/MarketParticipant.asp" class="m-two" title="市場參與者統計">市場參與者統計</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/7_10.asp" class="m-two" title="各類交易人各商品交易量統計表">各類交易人各商品交易量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/TradingStatistics1.asp" class="m-two" title="經紀、自營商交易量統計表">經紀、自營商交易量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/TradingStatistics2.asp" class="m-two" title="各類交易人交易量統計表">各類交易人交易量統計表</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/trade_volume.xls" target="_blank" class="m-two" title="前一月份各商品每日交易量統計表 ">前一月份各商品每日交易量統計表 </a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/VIXMinQuotesNew.asp" class="m-two" title="臺指選擇權波動率指數下載">臺指選擇權波動率指數下載</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/7/va01.asp" class="m-two" title="加值資料集">加值資料集</a></li>
+</ul></div></td><td width="20%" align="left" valign="top">
+<div class="footer_list">
+<ul><li><a href="http://www.taifex.com.tw/chinese/11/News1.asp" class="m-two" title="公告">公告</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/News2.asp" class="m-two" title="新聞稿">新聞稿</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/News3.asp" class="m-two" title="股票期貨/選擇權契約調整">股票期貨/選擇權契約調整</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/HisNews.asp" class="m-two" title="歷史資料區">歷史資料區</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/DailyMarketInfo.asp" class="m-two" title="每日市場資訊">每日市場資訊</a></li>
+<li><a href="http://www.taifex.com.tw/chinese/11/RSS0.asp" class="m-two" title="RSS資訊訂閱服務">RSS資訊訂閱服務</a></li>
+</ul></div></td></tr></tbody></table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#004ea2">
+  <tbody><tr>
+    <td width="3%" align="left" valign="top"></td>
+    <td width="68%" align="left" valign="middle">
+	  <span class="sublink">
+    	<a href="http://www.taifex.com.tw/chinese/edu/privacy.asp" target="_blank" class="link-a" title="隱私權保護說明"><font color="white">隱私權保護說明</font></a>|
+		<a href="http://www.taifex.com.tw/chinese/edu/use.asp" target="_blank" class="link-a" title="使用條款"><font color="white">使用條款</font></a>|
+    	<a href="http://www.taifex.com.tw/chinese/isp.pdf" class="link-a" title="資訊安全政策宣言" target="_blank"><font color="white">資訊安全政策宣言</font></a>|
+    	<a href="http://www.taifex.com.tw/chinese/11/RSS0.asp" target="_blank" class="link-a" title="RSS專區"><font color="white">RSS專區</font></a>|
+    	<a href="http://www.taifex.com.tw/chinese/9/9_7.asp" target="_blank" class="link-a" title="常見問題"><font color="white">常見問題</font></a>|		
+		<a href="http://www8.www.gov.tw/policy/2009career/" target="_blank" class="link-a" title="就業資訊"><font color="white">就業資訊</font></a>
+     </span>
+   </td>
+    <td width="29%" align="left" valign="middle">
+      <span class="sublink">
+                      
+      </span>
+    </td>
+  </tr>
+</tbody></table>			
+	 
+    </div>
+  <div class="footer clearfix">
+
+        <div class="copyright">臺灣期貨交易所 Taiwan Futures Exchange 100 臺北市羅斯福路二段100號14樓<br>
+            Tel: (02) 2369-5678    Fax: (02) 2365-7272&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.taifex.com.tw/chinese/edu/service.asp">服務信箱(service@taifex.com.tw)</a> <br>
+            臺灣期貨交易所 免付費服務專線：0800-075-566 &nbsp;&nbsp;&nbsp;&nbsp;螢幕解析度建議：1024X768 </div>
+    <!--
+	<div class="line_pc"><a href="http://line.naver.jp/R/msg/text/?http%3A%2F%2F59%2E120%2E135%2E116%2Fchinese%2F3%2F3%5F5%2Easp"></a></div>
+-->
+
+	<div class="qrcode"><a href="http://www.taifex.com.tw/m_chinese/index.asp"></a></div>
+	<div class="phone"><a href="http://www.taifex.com.tw/m_chinese/index.asp"></a></div>
+			
+	
+    </div>
+	
+    <!--Footer End--> 
+</div>
+
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>
