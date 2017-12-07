@@ -1,0 +1,50 @@
+1. 因為TWSE網站可能會因為短時間內大量request而封鎖我們IP，所以請使用以下網址來替代實際上的網址
+	9月份台積電收盤資料: https://isaac60103.github.io/crawl_course/static_page/twse_201709
+	10月份台積電收盤資料: https://isaac60103.github.io/crawl_course/static_page/twse_201710
+	9-10月份匯率資料: https://isaac60103.github.io/crawl_course/static_page/taifex.html
+	
+2. 若直接從匯率網站抓資料，必須以POST方式取得
+	網址為: http://www.taifex.com.tw/chinese/3/3_5.asp
+	POST表單: {'download':'','hdn_gostartdate':'2017/09/1','hdn_goenddate':'2017/10/31','syear':'2017','smonth':'09','sday':'1','eyear':'2017','emonth':'10','eday':'31','datestart':'2017/09/1','dateend':'2017/10/31'}
+	若使用上面提供的網址請直接以一般GET方式即可
+	
+3. 寫入CSV時，請參照以下Code:
+	df.to_csv(filename, sep=',', encoding='utf-8-sig', index=False)
+	filename: 檔名
+	encoding='utf-8-sig': 以'UTF-8 with BOM'編碼格式存檔
+	
+4. 從TWSE request的資料為JSON格式， 可使用以下Code將其讀入Dataframe
+	data = res.json()
+	header = data['fields'] #指定欄位名稱
+	df = pd.DataFrame.from_records(data, columns=header)
+	可透過觀察JSON的內容來取得所需的資料
+	
+5. 將TWSE資料讀入Dataframe後，需要將'日期'欄位內容修改成與匯率資料的日期格式相同(106/09/01 -> 2017/9/1)，請直接使用以下Code
+	for i, row in df.iterrows():
+		strDate = row[0]
+		DateArr = strDate.split("/")
+		DateArr[0] = str(int(DateArr[0])+1911)
+		DateArr[1] = str(int(DateArr[1]))
+		DateArr[2] = str(int(DateArr[2]))
+		df.loc[i, '日期'] = '/'.join(DateArr)
+	df.head()
+	
+6. 用requests取得某些網站資料時，可能會有亂碼情況，可觀察網頁本身編碼與META所定義的編碼來判定，本次使用的匯率網站本身編碼為'latin1'但META定義的卻為'UTF-8'，所以我們可以使用以下Code來指定編碼的方式
+	html = requests.get(URL)
+	html.encoding = 'utf-8'
+	
+7. Pandas存取SqLite非常方便，以下為常用的語法
+	import pandas.io.sql as pd_sql
+	import sqlite3 as sql
+	
+	#連線至sqlite檔案，若無該檔案sql，則會建立一個新的
+	conn = sql.connect("my_db.db")
+	
+	#將Dataframe資料寫入sql檔中的'tab'表中，無該資料表則會自動建立
+	df.to_sql("tab", conn, if_exists="replace") #if_exists="replace"是指若是發現相同表格則會完全取代該表格內容，使用上請注意(不指定此參數預設為不做修改)
+	
+	#從sql檔中的'tab'表中將資料讀入Dataframe中
+	df = pd.read_sql_query("select * from tab;", conn) #其中SQL指令可自行依需求修改(insert、update...)
+	
+8. 以'日期'欄位合併兩Dataframe，請使用以下Code:
+	result = pd.merge(csv1, csv2, on='日期')

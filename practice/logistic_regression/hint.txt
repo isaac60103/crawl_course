@@ -1,0 +1,24 @@
+1. 訓練資料若有文字，將其轉成特徵數據
+	如性別資料:male定為0、female定為1
+	參考Code:
+		pd.options.mode.chained_assignment = None
+		df.loc[df["Sex"] == "male", "Sex"] = 0
+		df.loc[df["Sex"] == "female", "Sex"] = 1
+
+2. 本例中年齡資料有部分缺漏，請以平均值取代
+	參考Code:
+		df['Age'] = df['Age'].fillna(df['Age'].median())
+
+3. 以['Sex','Pclass','Age']等欄位來預測['Survived']是否存活
+	Sex: 性別
+	Pclass: 艙等
+	Age: 年齡
+	Survived: 是否存活
+
+4. 本範例標準化請使用以下Code:
+	from sklearn.preprocessing  import StandardScaler
+	sc=StandardScaler()
+	sc.fit(x_train)
+	x_train_nor=sc.transform(x_train) #x_train_nor:標準化過的訓練資料
+	x_test_nor=sc.transform(x_test) #x_test_nor:標準化過的測試資料
+	

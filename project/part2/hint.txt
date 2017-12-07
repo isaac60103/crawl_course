@@ -1,0 +1,46 @@
+1. 參考function
+	#定義準備train data方法
+	def regData(x):
+		#格式化數字
+		for i, row in x.iterrows():
+			x.loc[i, '成交股數'] = row['成交股數'].replace(',', '')
+			x.loc[i, '成交筆數'] = row['成交筆數'].replace(',', '')
+		#做normalization(第i天資料/i-1天資料)
+		print(x.head())
+		for i, row in X.iterrows():
+			if i <= len(X)-2:
+				x.loc[i, '成交股數'] = int(x.loc[i+1, '成交股數'])/int(x.loc[i, '成交股數'])
+				x.loc[i, '成交筆數'] = int(x.loc[i+1, '成交筆數'])/int(x.loc[i, '成交筆數'])
+				x.loc[i, '美元／新台幣'] = x.loc[i+1, '美元／新台幣']/x.loc[i, '美元／新台幣']
+		return x.head(30) #不取最後一筆
+
+	#定義LinearRegression對應data
+	def linReg(y):
+		y.drop(0, axis=0, inplace=True)
+		y = y.reset_index(drop=True)
+		print(y.head())
+		return y
+
+	#定義LogisticRegression對應data
+	def logReg(y):
+		#刪除第一列(平移結果，使input今日資料預測明日的漲跌)
+		y.drop(0, axis=0, inplace=True)
+		y = y.reset_index(drop=True)
+		#將價差=0定義為 1 (漲), 價差<=0定義為 0 (跌)
+		for i, row in y.iterrows():
+			if y.loc[i, '漲跌價差'] >= 0:
+				y.loc[i, '漲跌價差'] = 1
+			else:
+				y.loc[i, '漲跌價差'] = 0
+		print(y.head())
+		return y['漲跌價差']
+		
+2. 讀取合併後的大表格，並使用以上方法將資料normalize與平移
+	ex.
+		X = regData(df[['成交股數', '成交筆數', '美元／新台幣']].head(31))
+		y = logReg(df[['漲跌價差']].head(31)) #使用LogisticRegression
+		
+3. 準備好資料即可以所學的LinearRegression與LogisticRegression方法來預測資料
+
+4. Normalize資料是以當天除以前一天資料，所以取資料需要多取一筆，normalize完後再將多餘那一筆刪除
+	如: 要拿30天資料做training必須取31天資料才能normalize出30天資料
