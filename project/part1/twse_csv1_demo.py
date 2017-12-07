@@ -6,10 +6,20 @@ import pandas.io.sql as pd_sql
 import sqlite3 as sql
 from time import sleep
 
-#小心requrest太過頻繁IP會被對方封鎖
-res1 = requests.get('http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=20170901&stockNo=2330')
-sleep(5)
-res2 = requests.get('http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=20171001&stockNo=2330')
+err_count = 0
+while err_count < 3:
+    try:
+        #小心requrest太過頻繁IP會被對方封鎖
+        res1 = requests.get('http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=20170901&stockNo=2330')
+        sleep(5)
+        res2 = requests.get('http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=20171001&stockNo=2330')
+        break
+    except:
+        sleep(5)
+        err_count += 1
+        continue
+if err_count == 3:
+    print('連線失敗')
 
 json1 = res1.json()
 json2 = res2.json()

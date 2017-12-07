@@ -5,7 +5,19 @@ import pandas.io.sql as pd_sql
 import sqlite3 as sql
 
 payload = {'download':'','hdn_gostartdate':'2017/09/1','hdn_goenddate':'2017/10/31','syear':'2017','smonth':'09','sday':'1','eyear':'2017','emonth':'10','eday':'31','datestart':'2017/09/1','dateend':'2017/10/31'}
-html = req.post('http://www.taifex.com.tw/chinese/3/3_5.asp', data=payload)
+
+err_count = 0
+while err_count <3:
+    try:
+        html = req.post('http://www.taifex.com.tw/chinese/3/3_5.asp', data=payload)
+        break
+    except:
+        sleep(5)
+        err_count += 1
+        continue
+if err_count == 3:
+    print('連線失敗')
+
 #注意網頁編碼
 html.encoding = 'utf-8'
 df = pd.read_html(html.text)
