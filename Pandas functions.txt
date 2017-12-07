@@ -1,0 +1,82 @@
+Pandas 語法整理
+
+##讀取
+1. 讀取CSV為Dataframe
+	df = pd.read_csv('filename.csv')
+
+2. 讀取HTML中的表格
+	df = pd.read_html(html) #Pandas會分析Html中所有的表格元素，並個別存入list中
+	df = df[2] #這裡的數字必須從0開始試，直到選取到所需資料表格為止
+
+3. 從DB(sqLite)讀取資料
+		import sqlite3 as sql
+		#連線至sqlite檔案，若無該檔案sql，則會建立一個新的
+		conn = sql.connect("sqlite.db")
+		#取得'demo'中所有的資料
+		pd.read_sql_query("select * from demo;", conn).head()
+
+##寫入(匯出)
+1. 將DF存成CSV
+	df.to_csv('filename.csv', sep=',', encoding='utf-8-sig', index=False)
+	#若是資料為純英文或不透過MS Excel開啟可不用設定 encoding='utf-8-sig'
+
+2. 將DF存成Html
+	df.to_html('filename.html')
+
+3. 將DF存入DB中
+		import sqlite3 as sql
+		#連線至sqlite檔案，若無該檔案sql，則會建立一個新的
+		conn = sql.connect("sqlite.db")
+		#將Dataframe資料寫入sql檔中的'demo1'表中，無該資料表則會自動建立
+		df.to_sql("demo1", conn, if_exists="replace")
+
+##Dataframe的操作
+1. 取前n筆資料，預設為前5筆
+	df.head(n)
+
+2. 取後n筆資料，預設為後5筆
+	df.tail(n)
+
+3. 刪除特定欄位資料，axis=1為指定刪除欄，axis=0為指定刪除列
+	df.drop('col', axis=1)
+
+4. 將list轉換成Dataframe
+	list = [['val1', 'val2', ...], ['val3', 'val4', ...]]
+	df = pd.DataFrame.from_records(list, columns=['col1', 'col2', ...])
+
+5. 以index排序，ascending=True為順序，ascending=False為反序
+	df.sort_index(ascending=False)
+	
+6. 修改DF中欄位資料
+	df.loc[row_index, column_index] = change value
+	可加入條件式，如:col欄位中，若值='something'則以'1'取代
+	df.loc[df['col'] == 'something', 'col'] = 1
+	#請避免以df['col'] = something 來修改DF欄位
+	
+7. 以'value'取代DF的col中所有的空值
+	df['col'] = df['col'].fillna('value')
+
+8. 以日期為單位，整併2個DF
+	result = pd.merge(csv1, csv2, on='日期')
+
+9. 修改整個DF的欄位名稱(傳入list長度必須要與欄位數量相同)
+	df.columns(['col1', 'col2', ...])
+
+11. 以列數選取特定列
+	df.iloc[0] #取第1列
+	
+12. 以index選取特定列
+	df.loc[0] #取index為0的列
+	
+13. 選取欄位
+	df['col1'] #取名為'col1'之欄位
+	
+14. 特定欄位特定列數取值
+	df['col1'].iloc[0] #選取名為'col1'之欄位中第一列的值
+
+#以下為數值分析方法
+15. 整體資料的平均值(以各欄位為單位)
+	df.mean()
+	
+16. 整體資料的標準差(以各欄位為單位)
+	df.std()

@@ -14,12 +14,12 @@ df.columns = df.iloc[0]
 df = df.reindex(df.index.drop(0))
 
 #存成CSV
-df.to_csv('fp_demo2.csv', sep=',', encoding='utf-8-sig', index=False)
+df.to_csv('../data/fp_demo2.csv', sep=',', encoding='utf-8-sig', index=False)
 
 
 #存入SqLite
 #連線至sqlite檔案，若無該檔案sql，則會建立一個新的
-#conn = sql.connect("twse.db")
+#conn = sql.connect("../data/twse.db")
 #將Dataframe資料寫入sql檔中的'demo2'表中，無該資料表則會自動建立
 #df.to_sql("demo2", conn, if_exists="replace")
 

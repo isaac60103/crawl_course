@@ -41,10 +41,10 @@ def logReg(y):
 
 #讀取資料
 #從CSV讀取
-df = pd.read_csv('fp_demo3.csv')
+df = pd.read_csv('../data/fp_demo3.csv')
 
 #從sqLite讀取
-#conn = sql.connect("twse.db")
+#conn = sql.connect("../data/twse.db")
 #df = pd.read_sql_query("select * from demo3;", conn)
     
 #取得必要欄位，以前30筆作為training data
@@ -72,30 +72,9 @@ intercept = regression_model.intercept_[0]
 
 print("The intercept for our model is {}".format(intercept))
 
-#用training data算準確率
-predictions = regression_model.predict(X_train)
-regression_model.score(X_train, y_train) #資料零散程度大且資料量不夠可能造成準確率較低
-
-#用testing data計算平方誤差
-y_predict = regression_model.predict(X_test)
-regression_model_mse = mean_squared_error(y_predict, y_test)
-regression_model_mse
-
-#將誤差開平方根
-math.sqrt(regression_model_mse)
-
-#使用未引入data做測試(取任兩相鄰資料做normalize)
-t1 = df.loc[df['日期'] == '2017/10/17'][['成交股數', '成交筆數', '美元／新台幣']]
-t2 = df.loc[df['日期'] == '2017/10/16'][['成交股數', '成交筆數', '美元／新台幣']]
-
-#重設資料index
-t1.reset_index(drop=True,inplace=True)
-t2.reset_index(drop=True,inplace=True)
-
-#格式化資料
-t1.loc[0, '成交股數'] = int(t1.loc[0, '成交股數'].replace(',', ''))/int(t2.loc[0, '成交股數'].replace(',', ''))
-t1.loc[0, '成交筆數'] = int(t1.loc[0, '成交筆數'].replace(',', ''))/int(t2.loc[0, '成交筆數'].replace(',', ''))
-t1.loc[0, '美元／新台幣'] = float(t1.loc[0, '美元／新台幣'])/float(t2.loc[0, '美元／新台幣'])
-
-#預測結果
-int(regression_model.predict([t1.loc[0].tolist()]))
+#使用testing data準確率
+predictions = regression_model.predict(X_test)
+#印出testing data之預測結果
+print(predictions)
+#準確率
+regression_model.score(X_test, y_test)

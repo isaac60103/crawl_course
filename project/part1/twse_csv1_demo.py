@@ -21,7 +21,7 @@ data.extend(json2['data'])
 
 df = pd.DataFrame.from_records(data, columns=header)
 
-#日期轉換西元年、重複執行這裡會讓日期溢位
+#日期轉換西元年
 for i, row in df.iterrows():
     #print(row[0])
     strDate = row[0]
@@ -33,11 +33,11 @@ for i, row in df.iterrows():
     df.loc[i, '日期'] = '/'.join(DateArr)
 
 #存成CSV
-df.to_csv('fp_demo.csv', sep=',', encoding='utf-8-sig', index=False)
+df.to_csv('../data/fp_demo.csv', sep=',', encoding='utf-8-sig', index=False)
 
 #存入SqLite
 #連線至sqlite檔案，若無該檔案sql，則會建立一個新的
-#conn = sql.connect("twse.db")
+#conn = sql.connect("../data/twse.db")
 #將Dataframe資料寫入sql檔中的'demo1'表中，無該資料表則會自動建立
 #df.to_sql("demo1", conn, if_exists="replace")
 
