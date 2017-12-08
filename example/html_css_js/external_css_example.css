@@ -1,0 +1,12 @@
+.h_class{
+	color: yellow;
+}
+#p_id{
+	background-color:red;
+	font-size:40px;
+}
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
