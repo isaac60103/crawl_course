@@ -4,8 +4,8 @@ import pandas.io.sql as pd_sql
 import sqlite3 as sql
 
 #從CSV載入資料
-df1 = pd.read_csv('fp_demo.csv')
-df2 = pd.read_csv('fp_demo2.csv')
+df1 = pd.read_csv('../data/fp_demo.csv')
+df2 = pd.read_csv('../data/fp_demo2.csv')
 
 #從SqLite載入資料
 #conn = sql.connect("../data/twse.db")
